@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -23,12 +23,13 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import AppNavigator from './src/navigators/AppNavigator';
 
 const App = () => {
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
+      {/* <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
@@ -67,7 +68,8 @@ const App = () => {
             <LearnMoreLinks />
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </SafeAreaView> */}
+      <AppNavigator />
     </Fragment>
   );
 };
