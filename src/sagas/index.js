@@ -1,6 +1,7 @@
-import { AuthTypes } from '../types';
+import { AuthTypes, CampaignTypes } from '../types';
 
 import { login } from './AuthSaga';
+import { getCampaigns } from './CampaignSaga';
 
 import { takeLatest, all } from '@redux-saga/core/effects';
 
@@ -10,6 +11,7 @@ const api = API.create();
 
 export default function* root() {
   yield all([
-    takeLatest(AuthTypes.LOGIN, login, api)
+    takeLatest(AuthTypes.LOGIN, login, api),
+    takeLatest(CampaignTypes.GET_CAMPAIGNS, getCampaigns, api)
   ])
 }

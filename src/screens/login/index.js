@@ -2,11 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, SafeAreaView, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
 
 import { connect } from 'react-redux';
-
 import { AuthActions } from '../../actions';
 
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import styles from './styles';
 import { Colors } from '../../utils/Themes';
 
@@ -14,18 +14,25 @@ class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: 'admin',
+      password: 'password',
     };
 
     this.handleLogin = this.handleLogin.bind(this)
   }
 
   handleLogin() {
-    this.props.login('admin', 'password')
+    let { username, password } = this.state
+    console.log(username, password)
+    this.props.login(username, password)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.accessToken)
+      nextProps.navigation.navigate('MainTab')
   }
 
   render() {
-    console.log('loading', this.props.loading)
-    console.log('token', this.props.accessToken)
     return (
       <KeyboardAvoidingView style={styles.container}>
         <View style={styles.greetingView}>
@@ -41,6 +48,9 @@ class LoginScreen extends Component {
               placeholderTextColor={'#88a0a8'}
               underlineColorAndroid={'white'}
               selectionColor={Colors.accent}
+              value={this.state.username}
+              autoCompleteType={'username'}
+              onChangeText={text => this.setState({ username: text })}
             />
             <View style={styles.divider} />
           </View>
@@ -51,6 +61,9 @@ class LoginScreen extends Component {
               placeholderTextColor={'#88a0a8'}
               underlineColorAndroid={'white'}
               selectionColor={Colors.accent}
+              value={this.state.password}
+              onChangeText={text => this.setState({ password: text })}
+              secureTextEntry={true}
             />
             <View style={styles.divider} />
           </View>

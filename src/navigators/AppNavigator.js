@@ -1,13 +1,13 @@
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Transition } from 'react-native-reanimated';
-import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/Home';
+import AuthStack from './AuthStack';
+import MainTab from './MainTab';
 
 const MySwitch = createSwitchNavigator(
   {
-    Home: HomeScreen,
-    Login: LoginScreen,
+    MainTab: MainTab,
+    AuthStack: AuthStack,
   },
   {
     // The previous screen will slide to the bottom while the next screen will fade in
@@ -21,7 +21,7 @@ const MySwitch = createSwitchNavigator(
     //     <Transition.In type="fade" durationMs={500} />
     //   </Transition.Together>
     // ),
-    initialRouteName: 'Login'
+    initialRouteName: 'AuthStack'
   },
 );
 
