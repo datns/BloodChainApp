@@ -26,6 +26,9 @@ const Colors = {
   white: "#FFFFFF",
   gray: "#D9D2D2",
   gray2: "#F6F5F5",
+  white: "#FFF",
+  darkGray: "#a9a9a9",
+  foggyGrey: "#a7a498"
 };
 
 export { Fonts, FontSizes, Colors }
