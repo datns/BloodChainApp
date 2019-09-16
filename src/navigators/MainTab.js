@@ -4,10 +4,12 @@ import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import Profile from '../screens/profile';
 import Campaigns from '../screens/campaigns';
+import Locations from '../screens/locations';
 
 const MainTab = createBottomTabNavigator({
   Campaigns,
-  Profile
+  Profile,
+  Locations
 },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -21,7 +23,8 @@ const MainTab = createBottomTabNavigator({
         else if (routeName === 'Campaigns') {
           iconName = `droplet`;
         }
-
+        else if (routeName === 'Locations')
+          iconName = `map-pin`
         return <IconComponent name={iconName} size={20} color={tintColor} />
       }
     }),

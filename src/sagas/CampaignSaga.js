@@ -3,7 +3,6 @@ import { CampaignTypes } from '../types';
 import { put, call } from 'redux-saga/effects'
 
 export function* getCampaigns(api) {
-  console.log(api)
   try {
     const params = {
       page: 1,

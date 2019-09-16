@@ -15,10 +15,25 @@ const create = () => {
 
   const getCampaigns = (params) => api.get('campaigns', { params })
 
+  const getBloodCamps = (params) => api.get('blood-camps', { params })
+
+  const getBloodBanks = (params) => api.get('blood-banks', { params })
+
+  const getBloodTests = (params) => api.get('blood-test-centers', { params })
+
+  const getBloodSeparations = (params) => api.get('blood-separation-centers', { params })
+
+  const getHospitals = (params) => api.get('hospitals', { params })
+
   return {
     login,
     setAccessToken,
-    getCampaigns
+    getCampaigns,
+    getBloodBanks,
+    getBloodCamps,
+    getBloodSeparations,
+    getBloodTests,
+    getHospitals
   }
 }
 

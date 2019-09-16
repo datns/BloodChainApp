@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import { View, Text, SafeAreaView, FlatList, TouchableHighlight, Image } from 'react-native';
 
 import { connect } from 'react-redux'
-import { CampaignActions } from '../../actions';
+import {
+  CampaignActions,
+  BloodCampActions,
+  BloodBankActions,
+  BloodSeparationActions,
+  BloodTestActions,
+  HospitalActions
+} from '../../actions';
 
 import moment from 'moment';
 
@@ -16,7 +23,12 @@ class CampaignsScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.getCampaigns()
+    this.props.getCampaigns();
+    this.props.getBloodCamps();
+    this.props.getBloodBanks();
+    this.props.getBloodTests();
+    this.props.getBloodSeparations();
+    this.props.getHospitals();
   }
 
   renderItem({ item }) {
@@ -63,7 +75,7 @@ class CampaignsScreen extends Component {
           data={this.props.campaigns}
           renderItem={this.renderItem}
           keyExtractor={item => item._id}
-          style={{ paddingVertical: 20 }}
+          style={{ paddingVertical: 20, marginTop: 60 }}
           ItemSeparatorComponent={this.renderSeparator}
         />
       </SafeAreaView>
@@ -76,7 +88,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getCampaigns: () => dispatch(CampaignActions.getCampaigns())
+  getCampaigns: () => dispatch(CampaignActions.getCampaigns()),
+  getBloodCamps: () => dispatch(BloodCampActions.getBloodCamps()),
+  getBloodBanks: () => dispatch(BloodBankActions.getBloodBanks()),
+  getBloodTests: () => dispatch(BloodTestActions.getBloodTests()),
+  getBloodSeparations: () => dispatch(BloodSeparationActions.getBloodSeparations()),
+  getHospitals: () => dispatch(HospitalActions.getHospitals())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignsScreen);
