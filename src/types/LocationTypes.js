@@ -1,0 +1,5 @@
+const SELECT_LOCATION = 'SELECT_LOCATION';
+
+export {
+  SELECT_LOCATION
+}

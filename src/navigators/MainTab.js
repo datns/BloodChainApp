@@ -31,7 +31,8 @@ const MainTab = createBottomTabNavigator({
     tabBarOptions: {
       activeTintColor: '#FE0813',
       inactiveTintColor: '#B9C4D6',
-      showLabel: false
+      showLabel: false,
+      keyboardHidesTabBar: true,
     },
   })
 

@@ -4,4 +4,7 @@ const getBloodBanks = () => ({
   type: BloodBankTypes.GET_BLOOD_BANKS
 })
 
-export { getBloodBanks }
+const getNearbyBloodBanks = (position) => ({
+  type: BloodBankTypes.GET_NEARBY_BLOOD_BANKS, position
+})
+export { getBloodBanks, getNearbyBloodBanks }

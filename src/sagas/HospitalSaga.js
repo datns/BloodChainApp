@@ -18,3 +18,21 @@ export function* getHospitals(api) {
     yield put({ type: HospitalTypes.GET_HOSPITALS_FAILURE })
   }
 }
+
+export function* getNearbyHospitals(api, action) {
+  const location = action.position
+  try {
+    const params = {
+      page: 1,
+      size: 10,
+      sort: '-createdAt',
+      location
+    }
+    const response = yield call(api.getHospitals, params)
+    const nearbyHospitals = response.data.items
+    yield put({ type: HospitalTypes.GET_NEARBY_HOSPITALS_SUCCESS, nearbyHospitals })
+  } catch (err) {
+    console.log(err)
+    yield put({ type: HospitalTypes.GET_NEARBY_HOSPITALS_FAILURE })
+  }
+}

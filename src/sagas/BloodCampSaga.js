@@ -7,14 +7,30 @@ export function* getBloodCamps(api) {
     const params = {
       page: 1,
       size: 10,
-      sort: '-createdAt'
+      sort: '-createdAt',
     }
     const response = yield call(api.getBloodCamps, params)
-    console.log(response)
     const bloodCamps = response.data.items
     yield put({ type: BloodCampTypes.GET_BLOOD_CAMPS_SUCCESS, bloodCamps })
   } catch (err) {
-    console.log(err)
     yield put({ type: BloodCampTypes.GET_BLOOD_CAMPS_FAILURE })
+  }
+}
+
+export function* getNearbyBloodCamps(api, action) {
+  try {
+    const { position } = action
+    const params = {
+      page: 1,
+      size: 10,
+      sort: '-createdAt',
+      location: position
+    }
+    const response = yield call(api.getBloodCamps, params)
+    console.log('response', response)
+    const nearbyBloodCamps = response.data.items
+    yield put({ type: BloodCampTypes.GET_NEARBY_BLOOD_CAMPS_SUCCESS, nearbyBloodCamps })
+  } catch (err) {
+    yield put({ type: BloodCampTypes.GET_NEARBY_BLOOD_CAMPS_FAILURE })
   }
 }

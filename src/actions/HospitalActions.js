@@ -4,4 +4,8 @@ const getHospitals = () => ({
   type: HospitalTypes.GET_HOSPITALS
 })
 
-export { getHospitals }
+const getNearbyHospitals = (position) => ({
+  type: HospitalTypes.GET_NEARBY_HOSPITALS, position
+})
+
+export { getHospitals, getNearbyHospitals }

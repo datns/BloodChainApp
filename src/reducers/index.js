@@ -6,6 +6,7 @@ import BloodCampReducer from './BloodCampReducer';
 import BloodSeparationReducer from './BloodSeparationReducer';
 import BloodTestReducer from './BloodTestReducer';
 import HospitalReducer from './HospitalReducer';
+import LocationReducer from './LocationReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   bloodCamp: BloodCampReducer,
   bloodSeparation: BloodSeparationReducer,
   bloodTest: BloodTestReducer,
-  hospital: HospitalReducer
+  hospital: HospitalReducer,
+  location: LocationReducer
 })

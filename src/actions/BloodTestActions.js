@@ -4,4 +4,8 @@ const getBloodTests = () => ({
   type: BloodTestTypes.GET_BLOOD_TESTS
 })
 
-export { getBloodTests }
+const getNearbyBloodTests = (position) => ({
+  type: BloodTestTypes.GET_NEARBY_BLOOD_TESTS, position
+})
+
+export { getBloodTests, getNearbyBloodTests }

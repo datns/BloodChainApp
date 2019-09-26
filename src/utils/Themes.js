@@ -9,11 +9,10 @@ const Fonts = {
 
 const FontSizes = {
   h1: 32,
-  h2: 26,
+  h2: 22,
   h3: 18,
   title: 16,
   body: 12,
-  caption: 12,
   small: 8,
 }
 
@@ -28,7 +27,9 @@ const Colors = {
   gray2: "#F6F5F5",
   white: "#FFF",
   darkGray: "#a9a9a9",
-  foggyGrey: "#a7a498"
+  foggyGrey: "#a7a498",
+  whiteSmoke: "#f5f5f5",
+  tacao: "#F4A18E"
 };
 
 export { Fonts, FontSizes, Colors }

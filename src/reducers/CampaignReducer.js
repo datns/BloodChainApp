@@ -2,7 +2,7 @@ import Immutable from 'seamless-immutable';
 import { CampaignTypes } from '../types';
 
 const initialState = Immutable({
-  campaigns: null,
+  campaigns: [],
   fetching: false,
   error: false,
 })

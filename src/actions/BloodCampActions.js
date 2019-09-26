@@ -4,4 +4,8 @@ const getBloodCamps = () => ({
   type: BloodCampTypes.GET_BLOOD_CAMPS
 })
 
-export { getBloodCamps }
+const getNearbyBloodCamps = (position) => ({
+  type: BloodCampTypes.GET_NEARBY_BLOOD_CAMPS, position
+})
+
+export { getBloodCamps, getNearbyBloodCamps }
