@@ -10,7 +10,9 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Modal
 } from 'react-native';
 
 import ListLocation from '../../components/list-location';
@@ -24,7 +26,7 @@ import {
   HospitalActions
 } from '../../actions';
 
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import Modalize from 'react-native-modalize';
 import FeatherIcons from 'react-native-vector-icons/Feather';
@@ -77,6 +79,130 @@ const CATEGORIES = [
       <View style={{ width: 50, height: 50 }} />
   }
 ]
+
+const FAKEDATA = [
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73591",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73592",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73593",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73594",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73595",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73596",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73597",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73598",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73599",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e73590",
+  },
+  {
+    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
+    createdAt: "2019-07-05T08:44:30.357Z",
+    email: "test456@yopmail.com",
+    location: {
+      coordinates: [126.95189457116396, 37.459882]
+    },
+    name: "Test Blood Test Center",
+    phone: "+41 33 748 05 50",
+    _id: "5d1f0deebbe4947da03e735900",
+  }
+]
 class Locations extends Component {
   constructor(props) {
     super(props);
@@ -88,7 +214,8 @@ class Locations extends Component {
         longitudeDelta: 0.0121,
       },
       textSearch: '',
-      selectedCategory: 0
+      selectedCategory: 0,
+      modalVisible: false
     };
 
     this.onSelectCategory = this.onSelectCategory.bind(this);
@@ -97,6 +224,7 @@ class Locations extends Component {
     this.renderListLocation = this.renderListLocation.bind(this);
     this.onRegionChange = this.onRegionChange.bind(this);
     this.getNearbyAll = this.getNearbyAll.bind(this);
+    this.onMarkerPress = this.onMarkerPress.bind(this)
   }
 
   componentDidMount() {
@@ -106,9 +234,9 @@ class Locations extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedLocation !== nextProps.selectedLocation) {
       // this.onRegionChange(nextProps.selectedLocation)
-      this.mapView.animateToRegion(nextProps.selectedLocation, 1000)
+      this.mapView.animateToRegion(nextProps.selectedLocation, 1000);
+      this.getNearbyAll(`${nextProps.selectedLocation.longitude},${nextProps.selectedLocation.latitude}`)
     }
-
   }
 
   getNearbyAll(position) {
@@ -233,7 +361,7 @@ class Locations extends Component {
     }
     return (
       <ListLocation
-        data={listLocation}
+        data={FAKEDATA}
         title={title}
         goBack={() => {
           this.setState({
@@ -243,9 +371,9 @@ class Locations extends Component {
     )
   }
 
-  renderContent() {
+  renderHeaderModal() {
     return (
-      <View>
+      <React.Fragment>
         <View style={styles.contentModal}>
           <Text style={styles.headingModal}>{'Where to ?'}</Text>
           <View style={styles.wrapInput}>
@@ -258,6 +386,13 @@ class Locations extends Component {
           </View>
         </View>
         <View style={styles.dividerModal} />
+      </React.Fragment>
+    )
+  }
+
+  renderContent() {
+    return (
+      <View style={styles.wrapContent}>
         {this.state.selectedCategory === 0 ? (
           <FlatList
             key={'categories'}
@@ -268,13 +403,34 @@ class Locations extends Component {
             style={{ flex: 1 }}
           />
         ) : this.renderListLocation(this.state.selectedCategory)}
-
       </View>
     )
   }
 
   onRegionChange(region) {
-    this.setState({ region });
+    // this.setState({ region });
+    this.mapView.animateToRegion(region, 1000);
+  }
+
+  onMarkerPress(location) {
+    this.props.navigation.navigate('Details', { location })
+  }
+
+  renderMarker(nearbyLocations, marker) {
+    return (
+      nearbyLocations.map(location => (
+        <Marker
+          key={location._id}
+          coordinate={{
+            longitude: location.location.coordinates[0],
+            latitude: location.location.coordinates[1]
+          }}
+          onPress={() => this.onMarkerPress(location)}
+        >
+          {marker}
+        </Marker>
+      ))
+    )
   }
 
   render() {
@@ -285,25 +441,22 @@ class Locations extends Component {
         <MapView
           style={styles.mapView}
           initialRegion={this.state.region}
-          region={this.state.region}
+          // region={this.state.region}
           ref={(ref) => this.mapView = ref}
-          onRegionChange={this.onRegionChange}
+          // onRegionChange={this.onRegionChange}
           showsUserLocation
           showsMyLocationButton
         >
-          {this.props.nearbyCamps.map(location => (
-            <MapView.Marker
-              key={location._id}
-              coordinate={{
-                longitude: location.location.coordinates[0],
-                latitude: location.location.coordinates[1]
-              }}
-            >
-            </MapView.Marker>
-          ))}
-
+          {this.renderMarker(this.props.nearbyCamps, CATEGORIES[0].image)}
+          {this.renderMarker(this.props.nearbyTests, CATEGORIES[1].image)}
+          {this.renderMarker(this.props.nearbySeparations, CATEGORIES[2].image)}
+          {this.renderMarker(this.props.nearbyBanks, CATEGORIES[3].image)}
+          {this.renderMarker(this.props.nearbyHospitals, CATEGORIES[4].image)}
         </MapView>
         <Modalize
+          HeaderComponent={
+            this.renderHeaderModal()
+          }
           modalStyle={styles.modal}
           alwaysOpen={alwaysOpen}
           handlePosition="inside"
@@ -325,6 +478,9 @@ const mapStateToProps = state => ({
   selectedLocation: state.location.selectedLocation,
   nearbyCamps: state.bloodCamp.nearbyBloodCamps,
   nearbyBanks: state.bloodBank.nearbyBloodBanks,
+  nearbySeparations: state.bloodSeparation.nearbyBloodSeparations,
+  nearbyTests: state.bloodTest.nearbyBloodTests,
+  nearbyHospitals: state.hospital.nearbyHospitals
 })
 
 const mapDispatchToProps = dispatch => ({

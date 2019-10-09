@@ -29,7 +29,7 @@ class LoginScreen extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.accessToken)
-      nextProps.navigation.navigate('MainTab')
+      nextProps.navigation.navigate('HomeStack')
   }
 
   render() {

@@ -3,7 +3,7 @@ import { Fonts, FontSizes, Colors } from '../../utils/Themes';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   header: {
     flexDirection: 'row',

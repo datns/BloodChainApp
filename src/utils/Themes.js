@@ -19,6 +19,7 @@ const FontSizes = {
 const Colors = {
   accent: "#F72B2B",
   primary: "#D61B1F",
+  blood: "#FE0813",
   secondary: "#3A3232",
   tertiary: "#ED6004",
   black: "#000000",
@@ -29,7 +30,8 @@ const Colors = {
   darkGray: "#a9a9a9",
   foggyGrey: "#a7a498",
   whiteSmoke: "#f5f5f5",
-  tacao: "#F4A18E"
+  tacao: "#F4A18E",
+  coralRed: "#FF4040"
 };
 
 export { Fonts, FontSizes, Colors }

@@ -20,7 +20,6 @@ class ListLocation extends PureComponent {
   }
 
   _renderItem({ item, index }) {
-    console.log('item', item, index)
     const borderTop = { borderTopWidth: 1 };
     const borderBot = { borderBottomWidth: 1 }
     const location = {
@@ -69,10 +68,14 @@ class ListLocation extends PureComponent {
       <FlatList
         data={this.props.data}
         style={styles.container}
+        // contentContainerStyle={styles.container}
         renderItem={this._renderItem}
         keyExtractor={item => item._id}
         ListHeaderComponent={this.renderHeader()}
         ItemSeparatorComponent={this.renderSeparator}
+        // onEndReachedThreshold={1}
+        onEndReached={() => { console.log('end') }}
+        nestedScrollEnabled={true}
       />
     );
   }

@@ -2,11 +2,11 @@ import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Transition } from 'react-native-reanimated';
 import AuthStack from './AuthStack';
-import MainTab from './MainTab';
+import HomeStack from './HomeStack';
 
 const MySwitch = createSwitchNavigator(
   {
-    MainTab: MainTab,
+    HomeStack: HomeStack,
     AuthStack: AuthStack,
   },
   {

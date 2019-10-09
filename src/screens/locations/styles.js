@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
   contentModal: {
     padding: 20,
   },
+  wrapContent: {
+    marginTop: 5
+  },
   modal: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
     height: 10,
     width: '100%',
     backgroundColor: 'whitesmoke',
-    marginVertical: 5
+    marginTop: 5
   },
   wrapItem: {
     justifyContent: 'center',
