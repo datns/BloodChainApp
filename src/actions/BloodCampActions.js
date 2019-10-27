@@ -1,11 +1,15 @@
 import { BloodCampTypes } from '../types';
 
-const getBloodCamps = () => ({
-  type: BloodCampTypes.GET_BLOOD_CAMPS
+const getBloodCamps = (page) => ({
+  type: BloodCampTypes.GET_BLOOD_CAMPS, page
 })
 
 const getNearbyBloodCamps = (position) => ({
   type: BloodCampTypes.GET_NEARBY_BLOOD_CAMPS, position
 })
 
-export { getBloodCamps, getNearbyBloodCamps }
+const getBloodCampsByName = (name) => ({
+  type: BloodCampTypes.GET_BLOOD_CAMPS_BY_NAME, name
+})
+
+export { getBloodCamps, getNearbyBloodCamps, getBloodCampsByName }

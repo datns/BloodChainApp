@@ -1,11 +1,15 @@
 import { HospitalTypes } from '../types';
 
-const getHospitals = () => ({
-  type: HospitalTypes.GET_HOSPITALS
+const getHospitals = (page) => ({
+  type: HospitalTypes.GET_HOSPITALS, page
 })
 
 const getNearbyHospitals = (position) => ({
   type: HospitalTypes.GET_NEARBY_HOSPITALS, position
 })
 
-export { getHospitals, getNearbyHospitals }
+const getHospitalsByName = (name) => ({
+  type: HospitalTypes.GET_HOSPITALS_BY_NAME, name
+})
+
+export { getHospitals, getNearbyHospitals, getHospitalsByName }

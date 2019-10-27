@@ -31,7 +31,8 @@ const Colors = {
   foggyGrey: "#a7a498",
   whiteSmoke: "#f5f5f5",
   tacao: "#F4A18E",
-  coralRed: "#FF4040"
+  coralRed: "#FF4040",
+  easternBlue: '#11afae'
 };
 
 export { Fonts, FontSizes, Colors }

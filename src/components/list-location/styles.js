@@ -4,6 +4,7 @@ import { Fonts, FontSizes, Colors } from '../../utils/Themes';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // height: 500
   },
   header: {
     flexDirection: 'row',
@@ -66,6 +67,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.tacao
   },
+  footer: {
+    height: 30,
+    backgroundColor: Colors.whiteSmoke,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textLoadMore: {
+    fontFamily: Fonts.semi,
+    color: Colors.easternBlue,
+    fontSize: FontSizes.title
+  }
 })
 
 export default styles;

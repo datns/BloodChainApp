@@ -8,12 +8,10 @@ import {
   Dimensions,
   TextInput,
   FlatList,
-  Image,
   TouchableOpacity,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-  Modal
 } from 'react-native';
+
+import _ from 'lodash'
 
 import ListLocation from '../../components/list-location';
 
@@ -32,45 +30,46 @@ import Modalize from 'react-native-modalize';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import styles from './styles';
-import BloodBankSvg from '../../images/blood-bank.svg';
-import BloodCampSvg from '../../images/blood-camp1.svg';
-import HospitalSvg from '../../images/hospital.svg';
-import TestCenterSvg from '../../images/test-center1.svg';
-import SeparationCenterSvg from '../../images/separation-center.svg';
+import BloodBankSvg from '../../images/045-first-aid-kit.svg';
+import BloodCampSvg from '../../images/048-blood-transfusion.svg';
+import HospitalSvg from '../../images/034-medical-center.svg';
+import TestCenterSvg from '../../images/010-microscope.svg';
+import SeparationCenterSvg from '../../images/040-erythrocytes.svg';
 
 const { height } = Dimensions.get('window')
+
 
 const CATEGORIES = [
   {
     id: 1,
     name: 'Blood camp',
     image:
-      <BloodCampSvg width={40} height={40} />
+      <BloodCampSvg width={50} height={50} />
   },
   {
     id: 2,
     name: 'Test center',
     image:
-      <TestCenterSvg width={40} height={40} />
+      <TestCenterSvg width={50} height={50} />
   },
   {
     id: 3,
     name: 'Separation center',
 
     image:
-      <SeparationCenterSvg width={40} height={40} />
+      <SeparationCenterSvg width={50} height={50} />
   },
   {
     id: 4,
     name: 'Blood bank',
     image:
-      <BloodBankSvg width={40} height={40} />
+      <BloodBankSvg width={50} height={50} />
   },
   {
     id: 5,
     name: 'Hospital',
     image:
-      <HospitalSvg width={40} height={40} />
+      <HospitalSvg width={50} height={50} />
   },
   {
     id: 6,
@@ -80,129 +79,6 @@ const CATEGORIES = [
   }
 ]
 
-const FAKEDATA = [
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73591",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73592",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73593",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73594",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73595",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73596",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73597",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73598",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73599",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e73590",
-  },
-  {
-    address: "353, Yeonhui-ro, Seodaemun-gu, Seoul, Korea",
-    createdAt: "2019-07-05T08:44:30.357Z",
-    email: "test456@yopmail.com",
-    location: {
-      coordinates: [126.95189457116396, 37.459882]
-    },
-    name: "Test Blood Test Center",
-    phone: "+41 33 748 05 50",
-    _id: "5d1f0deebbe4947da03e735900",
-  }
-]
 class Locations extends Component {
   constructor(props) {
     super(props);
@@ -215,7 +91,8 @@ class Locations extends Component {
       },
       textSearch: '',
       selectedCategory: 0,
-      modalVisible: false
+      modalVisible: false,
+      page: 1
     };
 
     this.onSelectCategory = this.onSelectCategory.bind(this);
@@ -224,18 +101,23 @@ class Locations extends Component {
     this.renderListLocation = this.renderListLocation.bind(this);
     this.onRegionChange = this.onRegionChange.bind(this);
     this.getNearbyAll = this.getNearbyAll.bind(this);
-    this.onMarkerPress = this.onMarkerPress.bind(this)
+    this.onMarkerPress = this.onMarkerPress.bind(this);
+    this.loadMore = this.loadMore.bind(this);
+    this.requestLocations = this.requestLocations.bind(this);
+    this.handleBack = this.handleBack.bind(this);
+    this.onChangeText = this.onChangeText.bind(this);
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 200);
   }
 
   componentDidMount() {
     this.getLocation();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.selectedLocation !== nextProps.selectedLocation) {
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedLocation !== prevProps.selectedLocation) {
       // this.onRegionChange(nextProps.selectedLocation)
-      this.mapView.animateToRegion(nextProps.selectedLocation, 1000);
-      this.getNearbyAll(`${nextProps.selectedLocation.longitude},${nextProps.selectedLocation.latitude}`)
+      this.mapView.animateToRegion(this.props.selectedLocation, 1000);
+      this.getNearbyAll(`${this.props.selectedLocation.longitude},${this.props.selectedLocation.latitude}`)
     }
   }
 
@@ -292,36 +174,51 @@ class Locations extends Component {
     );
   }
 
-  onSelectCategory(id) {
-    switch (id) {
+  loadMore() {
+    this.setState((prevState) => ({
+      page: prevState.page + 1
+    }),
+      () => this.requestLocations(this.state.selectedCategory))
+  }
+
+  requestLocations(type) {
+    let { page } = this.state
+    console.log(type)
+    switch (type) {
       case 1: {
-        this.props.getBloodCamps()
+        this.props.getBloodCamps(page)
         break;
       };
       case 2: {
-        this.props.getBloodTests();
+        this.props.getBloodTests(page);
         break;
       }
       case 3: {
-        this.props.getBloodSeparations();
+        this.props.getBloodSeparations(page);
         break;
       }
       case 4: {
-        this.props.getBloodBanks();
+        this.props.getBloodBanks(page);
         break;
       }
       case 5: {
-        this.props.getHospitals();
+        this.props.getHospitals(page);
         break;
       }
     }
+  }
+
+  onSelectCategory(id) {
+    this.requestLocations(id)
     this.setState({ selectedCategory: id })
   }
 
   renderItemCategory({ item }) {
     return (
       <View style={styles.wrapItem}>
-        <TouchableOpacity style={styles.wrapImage} onPress={() => this.onSelectCategory(item.id)}>
+        <TouchableOpacity
+          style={styles.wrapImage}
+          onPress={() => this.onSelectCategory(item.id)}>
           {item.image}
         </TouchableOpacity>
         <Text style={styles.placeName}>{item.name}</Text>
@@ -329,48 +226,76 @@ class Locations extends Component {
     )
   }
 
+  handleBack() {
+    this.setState({
+      selectedCategory: 0,
+      page: 1
+    })
+  }
+
   renderListLocation(type) {
     let listLocation = [];
+    let searchLocation = [];
+    let isSearching = this.state.textSearch !== '';
     let title = '';
     switch (type) {
       case 1: {
         listLocation = this.props.camps;
+        searchLocation = this.props.searchCamps;
         title = 'Blood camps';
         break;
       }
       case 2: {
         listLocation = this.props.tests;
+        searchLocation = this.props.searchTests;
         title = 'Test centers';
         break;
       }
       case 3: {
         listLocation = this.props.separations;
+        searchLocation = this.props.searchSeparations;
         title = 'Separation centers';
         break;
       }
       case 4: {
         listLocation = this.props.banks;
+        searchLocation = this.props.searchBanks;
         title = 'Blood banks';
         break;
       }
       case 5: {
         listLocation = this.props.hospitals;
+        searchLocation = this.props.searchHospitals;
         title = 'Hospitals';
         break;
       }
     }
     return (
       <ListLocation
-        data={FAKEDATA}
+        data={!isSearching ? listLocation : searchLocation}
         title={title}
-        goBack={() => {
-          this.setState({
-            selectedCategory: 0
-          })
-        }} />
+        loadMore={!isSearching ? this.loadMore : null}
+        goBack={this.handleBack} />
     )
   }
 
+  onChangeText(textSearch) {
+    this.setState({ textSearch });
+    let { selectedCategory } = this.state
+    if (textSearch !== '') {
+      if (selectedCategory == 1)
+        this.props.getBloodCampsByName(textSearch)
+      else if (selectedCategory == 2)
+        this.props.getBloodTestsByName(textSearch)
+      else if (selectedCategory == 3)
+        this.props.getBloodSeparationsByName(textSearch)
+      else if (selectedCategory == 4)
+        this.props.getBloodBanksByName(textSearch)
+      else if (selectedCategory == 5)
+        this.props.getHospitalsByName(textSearch)
+    }
+    // textSearch !== '' && this.props.getBloodCampsByName(textSearch);
+  }
   renderHeaderModal() {
     return (
       <React.Fragment>
@@ -381,7 +306,7 @@ class Locations extends Component {
             <TextInput
               style={styles.searchInput}
               value={this.textSearch}
-              onChangeText={textSearch => this.setState({ textSearch })}
+              onChangeText={this.onChangeText}
             />
           </View>
         </View>
@@ -480,24 +405,34 @@ const mapStateToProps = state => ({
   nearbyBanks: state.bloodBank.nearbyBloodBanks,
   nearbySeparations: state.bloodSeparation.nearbyBloodSeparations,
   nearbyTests: state.bloodTest.nearbyBloodTests,
-  nearbyHospitals: state.hospital.nearbyHospitals
+  nearbyHospitals: state.hospital.nearbyHospitals,
+  searchCamps: state.bloodCamp.searchBloodCamps,
+  searchBanks: state.bloodBank.searchBloodBanks,
+  searchTests: state.bloodTest.searchBloodTests,
+  searchSeparations: state.bloodSeparation.searchBloodSeparations,
+  searchHospitals: state.hospital.searchHospitals
 })
 
 const mapDispatchToProps = dispatch => ({
-  getBloodCamps: () => dispatch(BloodCampActions.getBloodCamps()),
+  getBloodCamps: (page) => dispatch(BloodCampActions.getBloodCamps(page)),
   getNearbyBloodCamps: (position) => dispatch(BloodCampActions.getNearbyBloodCamps(position)),
+  getBloodCampsByName: name => dispatch(BloodCampActions.getBloodCampsByName(name)),
 
-  getBloodBanks: () => dispatch(BloodBankActions.getBloodBanks()),
+  getBloodBanks: (page) => dispatch(BloodBankActions.getBloodBanks(page)),
   getNearbyBloodBanks: (position) => dispatch(BloodBankActions.getNearbyBloodBanks(position)),
+  getBloodBanksByName: name => dispatch(BloodBankActions.getBloodBanksByName(name)),
 
-  getBloodTests: () => dispatch(BloodTestActions.getBloodTests()),
+  getBloodTests: (page) => dispatch(BloodTestActions.getBloodTests(page)),
   getNearbyBloodTests: (position) => dispatch(BloodTestActions.getNearbyBloodTests(position)),
+  getBloodTestsByName: name => dispatch(BloodTestActions.getBloodTestsByName(name)),
 
-  getBloodSeparations: () => dispatch(BloodSeparationActions.getBloodSeparations()),
+  getBloodSeparations: (page) => dispatch(BloodSeparationActions.getBloodSeparations(page)),
   getNearbyBloodSeparations: (position) => dispatch(BloodSeparationActions.getNearbyBloodSeparations(position)),
+  getBloodSeparationsByName: name => dispatch(BloodSeparationActions.getBloodSeparationsByName(name)),
 
-  getHospitals: () => dispatch(HospitalActions.getHospitals()),
+  getHospitals: (page) => dispatch(HospitalActions.getHospitals(page)),
   getNearbyHospitals: (position) => dispatch(HospitalActions.getNearbyHospitals(position)),
+  getHospitalsByName: name => dispatch(HospitalActions.getHospitalsByName(name)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locations);

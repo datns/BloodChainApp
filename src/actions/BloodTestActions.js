@@ -1,11 +1,15 @@
 import { BloodTestTypes } from '../types';
 
-const getBloodTests = () => ({
-  type: BloodTestTypes.GET_BLOOD_TESTS
+const getBloodTests = (page) => ({
+  type: BloodTestTypes.GET_BLOOD_TESTS, page
 })
 
 const getNearbyBloodTests = (position) => ({
   type: BloodTestTypes.GET_NEARBY_BLOOD_TESTS, position
 })
 
-export { getBloodTests, getNearbyBloodTests }
+const getBloodTestsByName = (name) => ({
+  type: BloodTestTypes.GET_BLOOD_TESTS_BY_NAME, name
+})
+
+export { getBloodTests, getNearbyBloodTests, getBloodTestsByName }

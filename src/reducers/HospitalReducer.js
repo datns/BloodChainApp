@@ -8,7 +8,11 @@ const initialState = Immutable({
 
   nearbyHospitals: [],
   nearbyFetching: false,
-  nearbyError: false
+  nearbyError: false,
+
+  searchHospitals: [],
+  searchFetching: false,
+  searchError: false
 })
 
 export default (state = initialState, action) => {
@@ -26,6 +30,13 @@ export default (state = initialState, action) => {
       return state.merge({ nearbyFetching: false, nearbyHospitals: action.nearbyHospitals, nearbyError: false })
     case HospitalTypes.GET_NEARBY_HOSPITALS_FAILURE:
       return state.merge({ nearbyFetching: false, nearbyError: true })
+
+    case HospitalTypes.GET_HOSPITALS_BY_NAME:
+      return state.merge({ searchFetching: false })
+    case HospitalTypes.GET_HOSPITALS_BY_NAME_SUCCESS:
+      return state.merge({ searchFetching: false, searchHospitals: action.searchHospitals, searchError: false })
+    case HospitalTypes.GET_HOSPITALS_BY_NAME_FAILURE:
+      return state.merge({ searchFetching: false, searchError: true })
     default: return state
   }
 }

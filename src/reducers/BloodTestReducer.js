@@ -8,7 +8,11 @@ const initialState = Immutable({
 
   nearbyBloodTests: [],
   nearbyFetching: false,
-  nearbyError: false
+  nearbyError: false,
+
+  searchBloodTests: [],
+  searchFetching: false,
+  searchError: false
 })
 
 export default (state = initialState, action) => {
@@ -26,6 +30,13 @@ export default (state = initialState, action) => {
       return state.merge({ nearbyFetching: false, nearbyBloodTests: action.nearbyBloodTests, nearbyError: false })
     case BloodTestTypes.GET_NEARBY_BLOOD_TESTS_FAILURE:
       return state.merge({ nearbyFetching: false, nearbyError: true })
+
+    case BloodTestTypes.GET_BLOOD_TESTS_BY_NAME:
+      return state.merge({ searchFetching: true })
+    case BloodTestTypes.GET_BLOOD_TESTS_BY_NAME_SUCCESS:
+      return state.merge({ searchFetching: false, searchBloodTests: action.searchBloodTests, searchError: false })
+    case BloodTestTypes.GET_BLOOD_TESTS_BY_NAME_FAILURE:
+      return state.merge({ searchFetching: false, searchError: true })
     default: return state
   }
 }

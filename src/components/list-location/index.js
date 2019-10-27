@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import styles from './styles'
@@ -17,6 +18,7 @@ class ListLocation extends PureComponent {
 
     this.renderHeader = this.renderHeader.bind(this)
     this._renderItem = this._renderItem.bind(this)
+    this.renderFooter = this.renderFooter.bind(this)
   }
 
   _renderItem({ item, index }) {
@@ -45,15 +47,24 @@ class ListLocation extends PureComponent {
 
   renderHeader() {
     return (
-      <View>
+      <React.Fragment>
         <View style={styles.header}>
           <TouchableOpacity onPress={this.props.goBack} style={styles.iconButton}>
             <FeatherIcon name={'arrow-left'} size={25} style={styles.icon} />
           </TouchableOpacity>
           <Text style={styles.title}>{this.props.title}</Text>
         </View>
-      </View>
+      </React.Fragment>
+    )
+  }
 
+  renderFooter() {
+    return (
+      <React.Fragment>
+        <TouchableOpacity style={styles.footer} onPress={this.props.loadMore}>
+          <Text style={styles.textLoadMore}>Load more</Text>
+        </TouchableOpacity>
+      </React.Fragment>
     )
   }
 
@@ -65,18 +76,17 @@ class ListLocation extends PureComponent {
 
   render() {
     return (
-      <FlatList
-        data={this.props.data}
-        style={styles.container}
-        // contentContainerStyle={styles.container}
-        renderItem={this._renderItem}
-        keyExtractor={item => item._id}
-        ListHeaderComponent={this.renderHeader()}
-        ItemSeparatorComponent={this.renderSeparator}
-        // onEndReachedThreshold={1}
-        onEndReached={() => { console.log('end') }}
-        nestedScrollEnabled={true}
-      />
+      <View style={{}}>
+        <FlatList
+          data={this.props.data}
+          style={styles.container}
+          renderItem={this._renderItem}
+          keyExtractor={item => item._id}
+          ListHeaderComponent={this.renderHeader()}
+          ItemSeparatorComponent={this.renderSeparator}
+          ListFooterComponent={this.props.loadMore && this.renderFooter()}
+        />
+      </View>
     );
   }
 }
