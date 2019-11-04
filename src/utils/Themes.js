@@ -12,7 +12,9 @@ const FontSizes = {
   h2: 22,
   h3: 18,
   title: 16,
+  subTitle: 14,
   body: 12,
+  subBody: 10,
   small: 8,
 }
 
@@ -32,7 +34,9 @@ const Colors = {
   whiteSmoke: "#f5f5f5",
   tacao: "#F4A18E",
   coralRed: "#FF4040",
-  easternBlue: '#11afae'
+  easternBlue: '#11afae',
+  dodgerBlue: '#448AFF',
+  strawberryPink: '#FF4081'
 };
 
 export { Fonts, FontSizes, Colors }

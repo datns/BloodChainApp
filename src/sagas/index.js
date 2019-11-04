@@ -5,7 +5,8 @@ import {
   BloodBankTypes,
   BloodSeparationTypes,
   BloodTestTypes,
-  HospitalTypes
+  HospitalTypes,
+  UserTypes
 } from '../types';
 
 import { login } from './AuthSaga';
@@ -15,6 +16,7 @@ import { getBloodBanks, getNearbyBloodBanks, getBloodBanksByName } from './Blood
 import { getBloodTests, getNearbyBloodTests, getBloodTestsByName } from './BloodTestSaga';
 import { getBloodSeparations, getNearbyBloodSeparations, getBloodSeparationsByName } from './BloodSeparationSaga';
 import { getHospitals, getNearbyHospitals, getHospitalsByName } from './HospitalSaga';
+import { getUserInfo } from './UserSaga';
 
 import { takeLatest, all } from '@redux-saga/core/effects';
 
@@ -45,7 +47,9 @@ export default function* root() {
 
     takeLatest(HospitalTypes.GET_HOSPITALS, getHospitals, api),
     takeLatest(HospitalTypes.GET_NEARBY_HOSPITALS, getNearbyHospitals, api),
-    takeLatest(HospitalTypes.GET_HOSPITALS_BY_NAME, getHospitalsByName, api)
+    takeLatest(HospitalTypes.GET_HOSPITALS_BY_NAME, getHospitalsByName, api),
+
+    takeLatest(UserTypes.GET_USER_INFO, getUserInfo, api)
 
   ])
 }

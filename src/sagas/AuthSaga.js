@@ -1,4 +1,4 @@
-import { AuthTypes } from '../types';
+import { AuthTypes, UserTypes } from '../types';
 
 import { put, call } from 'redux-saga/effects'
 
@@ -10,7 +10,7 @@ export function* login(api, action) {
       const { accessToken } = response.data
       yield call(api.setAccessToken, accessToken)
       yield put({ type: AuthTypes.LOGIN_SUCCESS, accessToken })
-
+      yield put({ type: UserTypes.GET_USER_INFO })
     }
   } catch (err) {
     console.log(err)

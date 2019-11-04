@@ -6,6 +6,7 @@ import * as BloodSeparationActions from './BloodSeparationActions';
 import * as BloodTestActions from './BloodTestActions';
 import * as HospitalActions from './HospitalActions';
 import * as LocationActions from './LocationActions';
+import * as UserActions from './UserActions';
 
 export {
   AuthActions,
@@ -15,5 +16,6 @@ export {
   BloodSeparationActions,
   BloodTestActions,
   HospitalActions,
-  LocationActions
+  LocationActions,
+  UserActions
 }

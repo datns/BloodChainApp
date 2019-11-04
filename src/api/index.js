@@ -25,6 +25,8 @@ const create = () => {
 
   const getHospitals = (params) => api.get('hospitals', { params })
 
+  const getUserInfo = () => api.get('auth/me')
+
   return {
     login,
     setAccessToken,
@@ -33,7 +35,8 @@ const create = () => {
     getBloodCamps,
     getBloodSeparations,
     getBloodTests,
-    getHospitals
+    getHospitals,
+    getUserInfo
   }
 }
 
