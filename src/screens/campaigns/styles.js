@@ -5,28 +5,34 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     // marginTop: StatusBar.currentHeight,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: Colors.white,
     alignItems: 'center'
   },
   header: {
-    backgroundColor: Colors.accent,
+    backgroundColor: Colors.coralRed,
     height: 50,
     width: '100%',
-    position: 'absolute',
-    elevation: 1,
+    // position: 'absolute',
+    // elevation: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  headerText: {
+    color: Colors.white,
+    fontFamily: Fonts.bold,
+    fontSize: FontSizes.h3
+  },
   item: {
     backgroundColor: Colors.white,
-    borderRadius: 20,
-    elevation: 2,
-    flex: 1,
+    elevation: 3,
     width: width - 30,
-    borderRadius: 10,
+    borderRadius: 8,
     overflow: 'hidden',
+    paddingHorizontal: 20,
+    paddingBottom: 15,
+    marginBottom: 15,
   },
   wrapImage: {
     flex: 1,
@@ -44,16 +50,15 @@ const styles = StyleSheet.create({
     padding: 10.
   },
   title: {
-    fontFamily: Fonts.bold,
-    fontSize: FontSizes.h3,
-    marginBottom: 10,
-    color: Colors.black
+    fontFamily: Fonts.semi,
+    fontSize: FontSizes.subTitle,
+    color: Colors.gray,
+    marginTop: 15
   },
   content: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.semi,
     fontSize: FontSizes.title,
-    color: Colors.darkGray,
-    marginBottom: 10
+    color: Colors.foggyGrey,
   },
   wrapExpired: {
     position: 'absolute',
@@ -70,6 +75,24 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semi,
     fontSize: FontSizes.h2,
     color: '#292926'
+  },
+  statusText: {
+    position: 'absolute',
+    top: 15,
+    right: 20,
+    fontFamily: Fonts.bold,
+    fontSize: FontSizes.subTitle,
+    color: Colors.coralRed,
+    opacity: 0.9
+  },
+  detailText: {
+    position: 'absolute',
+    bottom: 15,
+    right: 20,
+    fontFamily: Fonts.bold,
+    fontSize: FontSizes.title,
+    color: Colors.coralRed,
+    opacity: 0.9
   }
 });
 

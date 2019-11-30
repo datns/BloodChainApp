@@ -4763,6 +4763,12 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
 
+react-native-animatable@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-geolocation-service@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-3.1.0.tgz#62e112374f1cd284ea00ced0ef6826af820f50e2"
@@ -4785,6 +4791,13 @@ react-native-linear-gradient@^2.5.6:
 react-native-maps@0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.25.0.tgz#81bc51eb50e33811a9e1c345cc48869413ead67d"
+
+react-native-modal@^11.5.3:
+  version "11.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.5.3.tgz#28b4c761680a165eaf1d2c0fb08e272c0191b39f"
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "1.3.3"
 
 react-native-modalize@^1.2.1:
   version "1.2.1"
@@ -4829,6 +4842,10 @@ react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-1.4.1.tgz#f113cd87485808f0c991abec937f70fa380478b9"
   dependencies:
     prop-types "^15.6.1"
+
+react-native-timeline-flatlist@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-timeline-flatlist/-/react-native-timeline-flatlist-0.5.0.tgz#6f7e02c16a4bb073e15865ce2bda7c84a6dd8472"
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"

@@ -73,9 +73,95 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     width: '50%',
     alignItems: 'center',
+  },
+  bloodPackView: {
+    width: 40,
+    height: 50,
+    borderRadius: 6,
+    backgroundColor: Colors.nero,
+    overflow: 'hidden',
+  },
+  bloodPackHeader: {
+    flex: 0.2,
+    backgroundColor: Colors.primary,
+  },
+  bloodTypeView: {
+    flex: 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.transparent
+  },
+  bloodTypeText: {
+    fontFamily: Fonts.semi,
+    fontSize: FontSizes.subTitle,
+    color: Colors.white,
+    textAlign: 'center'
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center',
+    flex: 1
+  },
+  bloodPackInfo: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    justifyContent: 'space-around',
+  },
+  bloodCampName: {
+    fontFamily: Fonts.semi,
+    fontSize: FontSizes.title,
+    color: Colors.black,
+    opacity: 0.7
+  },
+  infoPackText: {
+    fontFamily: Fonts.medium,
+    fontSize: FontSizes.body,
+    color: Colors.darkGray,
+  },
+  timeText: {
+    textAlign: 'center',
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.subTitle,
+    color: Colors.black
+  },
+  titleHistoryView: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    justifyContent: 'space-between'
+  },
+  titleHistory: {
+    fontFamily: Fonts.semi,
+    fontSize: FontSizes.h3,
+    color: Colors.black,
+  },
+  timesText: {
+    fontFamily: Fonts.semi,
+    fontSize: FontSizes.h3,
+    backgroundColor: '#f0f8ff',
+    borderRadius: 5,
+    paddingHorizontal: 5,
+    color: Colors.foggyGrey
+  },
+  descriptionText: {
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.subTitle,
+    color: Colors.gray
+  },
+  detailContainerStyle: {
+    marginBottom: 20,
+    paddingLeft: 5,
+    paddingRight: 5,
+    backgroundColor: "#BBDAFF",
+    borderRadius: 10
+  },
+  timelineStyle: {
+    padding: 20,
+    flex: 1,
+    backgroundColor: Colors.white,
+    borderRadius: 10
   }
-
-
 })
 
 export default styles;

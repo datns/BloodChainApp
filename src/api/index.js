@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const create = () => {
   const api = axios.create({
-    baseURL: 'http://192.168.1.7:3000/api/',
+    baseURL: 'http://192.168.1.9:3000/api/',
     headers: {
       'Cache-Control': 'no-cache',
     },
@@ -27,6 +27,8 @@ const create = () => {
 
   const getUserInfo = () => api.get('auth/me')
 
+  const getBloodPacks = (params) => api.get('blood-packs/my-blood-packs', { params })
+
   return {
     login,
     setAccessToken,
@@ -36,7 +38,8 @@ const create = () => {
     getBloodSeparations,
     getBloodTests,
     getHospitals,
-    getUserInfo
+    getUserInfo,
+    getBloodPacks
   }
 }
 

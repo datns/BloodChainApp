@@ -29,49 +29,39 @@ class CampaignsScreen extends Component {
   renderItem({ item }) {
     const { bloodCamp, description, startDate, endDate, photos, name } = item;
     const isExpired = moment().isAfter(endDate);
+    const isInProgress = moment().isBetween(startDate, endDate)
     return (
       <View style={styles.item}>
-        {isExpired && (
-          <View style={styles.wrapExpired}>
-            <Text style={styles.textExpired}>Expired</Text>
-          </View>
-        )}
-        <View style={styles.wrapImage}>
-          <Image source={{ uri: photos[0].url }} style={styles.image} resizeMode={'cover'} />
-        </View>
-        <View style={styles.wrapContent}>
-          <Text style={styles.title}>
-            {name}
-          </Text>
-          <Text style={styles.content}>
-            {`${bloodCamp.name} - ${bloodCamp.address}`}
-          </Text>
-          {moment(startDate).isAfter(moment()) && <Text style={styles.content}>{`Starts ${moment(startDate).startOf('day').fromNow()}`}</Text>}
-          {moment().isBetween(startDate, endDate) && <Text style={styles.content}>{`Ends ${moment(endDate).endOf('day').fromNow()}`}</Text>}
-        </View>
+        <Text style={styles.title}>{'Name'}</Text>
+        <Text style={styles.content}>{name}</Text>
+        <Text style={styles.title}>{'Location'}</Text>
+        <Text style={styles.content}>{bloodCamp.name}</Text>
+        <Text style={styles.title}>{'Time'}</Text>
+        <Text style={styles.content}>{`${moment(startDate).format('DD.MM.YYYY')} - ${moment(endDate).format('DD.MM.YYYY')}`}</Text>
+        <Text style={styles.statusText}>{isExpired ? 'Expired' : isInProgress ? 'In Progress' : 'Prepared'}</Text>
+        <Text style={styles.detailText}>{'DETAIL'}</Text>
       </View>
     )
   }
 
   renderSeparator() {
     return (
-      <View style={{ backgroundColor: '#f5f5f5', height: 15, width: '100%' }}></View>
+      <View style={{ backgroundColor: 'white', height: 15, width: '100%' }}></View>
     )
   }
 
   render() {
-    console.log('campaigns', this.props.campaigns)
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Text>CAMPAIGNS</Text>
+          <Text style={styles.headerText}>CAMPAIGN</Text>
         </View>
         <FlatList
           data={this.props.campaigns}
           renderItem={this.renderItem}
           keyExtractor={item => item._id}
-          style={{ marginTop: 60 }}
-          ItemSeparatorComponent={this.renderSeparator}
+          contentContainerStyle={{ padding: 10 }}
+        // ItemSeparatorComponent={this.renderSeparator}
         />
       </SafeAreaView>
     );

@@ -7,6 +7,7 @@ import * as BloodBankTypes from './BloodBankTypes';
 import * as HospitalTypes from './HospitalTypes';
 import * as LocationTypes from './LocationTypes';
 import * as UserTypes from './UserTypes'
+import * as BloodPackTypes from './BloodPackTypes'
 
 export {
   AuthTypes,
@@ -17,5 +18,6 @@ export {
   BloodBankTypes,
   HospitalTypes,
   LocationTypes,
-  UserTypes
+  UserTypes,
+  BloodPackTypes
 }
