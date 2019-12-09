@@ -5,11 +5,13 @@ import FeatherIcons from 'react-native-vector-icons/Feather';
 import Profile from '../screens/profile';
 import Campaigns from '../screens/campaigns';
 import Locations from '../screens/locations';
+import Rewards from '../screens/rewards';
 
 const MainTab = createBottomTabNavigator({
   Campaigns,
   Profile,
-  Locations
+  Locations,
+  Rewards
 },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -25,6 +27,8 @@ const MainTab = createBottomTabNavigator({
         }
         else if (routeName === 'Locations')
           iconName = `map-pin`
+        else if (routeName === 'Rewards')
+          iconName = `gift`
         return <IconComponent name={iconName} size={20} color={tintColor} />
       }
     }),

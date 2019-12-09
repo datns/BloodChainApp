@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const create = () => {
   const api = axios.create({
-    baseURL: 'http://192.168.1.9:3000/api/',
+    baseURL: 'https://bloodchain.herokuapp.com/api/',
     headers: {
       'Cache-Control': 'no-cache',
     },
@@ -29,6 +29,10 @@ const create = () => {
 
   const getBloodPacks = (params) => api.get('blood-packs/my-blood-packs', { params })
 
+  const getVouchers = (params) => api.get('rewards/public', { params })
+
+  const getEthereumPlan = () => api.get('rewards/ethereum/plans');
+
   return {
     login,
     setAccessToken,
@@ -39,7 +43,9 @@ const create = () => {
     getBloodTests,
     getHospitals,
     getUserInfo,
-    getBloodPacks
+    getBloodPacks,
+    getVouchers,
+    getEthereumPlan
   }
 }
 

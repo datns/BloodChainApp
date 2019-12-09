@@ -8,6 +8,7 @@ import * as HospitalActions from './HospitalActions';
 import * as LocationActions from './LocationActions';
 import * as UserActions from './UserActions';
 import * as BloodPackActions from './BloodPackActions';
+import * as RewardActions from './RewardActions';
 
 export {
   AuthActions,
@@ -19,5 +20,6 @@ export {
   HospitalActions,
   LocationActions,
   UserActions,
-  BloodPackActions
+  BloodPackActions,
+  RewardActions
 }

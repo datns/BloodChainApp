@@ -9,6 +9,7 @@ import HospitalReducer from './HospitalReducer';
 import LocationReducer from './LocationReducer';
 import UserReducer from './UserReducer';
 import BloodPackReducer from './BloodPackReducer';
+import RewardReducer from './RewardReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   hospital: HospitalReducer,
   location: LocationReducer,
   user: UserReducer,
-  bloodPack: BloodPackReducer
+  bloodPack: BloodPackReducer,
+  reward: RewardReducer
 })

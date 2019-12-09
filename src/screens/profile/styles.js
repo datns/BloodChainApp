@@ -161,6 +161,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
     borderRadius: 10
+  },
+  qrCodeContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 250,
+    height: 250,
+    backgroundColor: Colors.white
   }
 })
 

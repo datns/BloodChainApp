@@ -38,7 +38,10 @@ const Colors = {
   dodgerBlue: '#448AFF',
   strawberryPink: '#FF4081',
   nero: '#272424',
-  transparent: 'transparent'
+  transparent: 'transparent',
+  rose: '#D25563',
+  blue: '#2551C4',
+  green: '#058F5D'
 };
 
 export { Fonts, FontSizes, Colors }

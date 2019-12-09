@@ -7,11 +7,12 @@ import {
   BloodTestTypes,
   HospitalTypes,
   UserTypes,
-  BloodPackTypes
+  BloodPackTypes,
+  RewardTypes,
 } from '../types';
 
 import { login } from './AuthSaga';
-import { getCampaigns } from './CampaignSaga';
+import { getCampaigns, getCampaignsByName } from './CampaignSaga';
 import { getBloodCamps, getNearbyBloodCamps, getBloodCampsByName } from './BloodCampSaga';
 import { getBloodBanks, getNearbyBloodBanks, getBloodBanksByName } from './BloodBankSaga';
 import { getBloodTests, getNearbyBloodTests, getBloodTestsByName } from './BloodTestSaga';
@@ -19,6 +20,7 @@ import { getBloodSeparations, getNearbyBloodSeparations, getBloodSeparationsByNa
 import { getHospitals, getNearbyHospitals, getHospitalsByName } from './HospitalSaga';
 import { getUserInfo } from './UserSaga';
 import { getBloodPacks } from './BloodPackSaga';
+import { getVouchers, getEthereums } from './RewardSaga';
 
 import { takeLatest, all } from '@redux-saga/core/effects';
 
@@ -30,6 +32,7 @@ export default function* root() {
   yield all([
     takeLatest(AuthTypes.LOGIN, login, api),
     takeLatest(CampaignTypes.GET_CAMPAIGNS, getCampaigns, api),
+    takeLatest(CampaignTypes.GET_CAMPAIGNS_BY_NAME, getCampaignsByName, api),
 
     takeLatest(BloodCampTypes.GET_BLOOD_CAMPS, getBloodCamps, api),
     takeLatest(BloodCampTypes.GET_NEARBY_BLOOD_CAMPS, getNearbyBloodCamps, api),
@@ -53,6 +56,9 @@ export default function* root() {
 
     takeLatest(UserTypes.GET_USER_INFO, getUserInfo, api),
 
-    takeLatest(BloodPackTypes.GET_BLOOD_PACKS, getBloodPacks, api)
+    takeLatest(BloodPackTypes.GET_BLOOD_PACKS, getBloodPacks, api),
+
+    takeLatest(RewardTypes.GET_VOUCHERS, getVouchers, api),
+    takeLatest(RewardTypes.GET_ETHEREUMS, getEthereums, api)
   ])
 }

@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, FlatList, TouchableHighlight, Image } from 'react-native';
+import { View, Text, SafeAreaView, FlatList, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 
 import { connect } from 'react-redux'
+import Modalize from 'react-native-modalize'
+import Icon from 'react-native-vector-icons/Feather'
+import _ from 'lodash'
+
 import {
   CampaignActions,
-  BloodCampActions,
-  BloodBankActions,
-  BloodSeparationActions,
-  BloodTestActions,
-  HospitalActions
 } from '../../actions';
 
 import moment from 'moment';
 
+import ModalDetail from '../../components/modal-detail';
 import styles from './styles';
+import { Colors } from '../../utils/Themes';
 
 class CampaignsScreen extends Component {
+  modal = React.createRef();
+
   constructor(props) {
     super(props);
     this.state = {
+      item: {},
+      searchText: ''
     };
+    this.handleDetail = this.handleDetail.bind(this);
+    this.renderItem = this.renderItem.bind(this);
+    this.onPressLocation = this.onPressLocation.bind(this);
+    this.onChangeText = this.onChangeText.bind(this);
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 200)
+
   }
 
   componentDidMount() {
@@ -39,9 +50,18 @@ class CampaignsScreen extends Component {
         <Text style={styles.title}>{'Time'}</Text>
         <Text style={styles.content}>{`${moment(startDate).format('DD.MM.YYYY')} - ${moment(endDate).format('DD.MM.YYYY')}`}</Text>
         <Text style={styles.statusText}>{isExpired ? 'Expired' : isInProgress ? 'In Progress' : 'Prepared'}</Text>
-        <Text style={styles.detailText}>{'DETAIL'}</Text>
+        <TouchableOpacity onPress={() => this.handleDetail(item)} style={styles.detailButton}>
+          <Text style={styles.detailText}>{'DETAIL'}</Text>
+        </TouchableOpacity>
       </View>
     )
+  }
+
+  handleDetail(item) {
+    this.setState({ item });
+    if (this.modal.current) {
+      this.modal.current.open();
+    }
   }
 
   renderSeparator() {
@@ -50,30 +70,62 @@ class CampaignsScreen extends Component {
     )
   }
 
+  onPressLocation() {
+    this.props.navigation.navigate('Details', { location: this.state.item.bloodCamp });
+  }
+
+  onChangeText(searchText) {
+    this.setState({ searchText });
+    this.props.getCampaignsByName(searchText)
+  }
+
   render() {
+    const modalHeight = Dimensions.get('window').height * 0.5;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}>CAMPAIGN</Text>
+          <View style={styles.inputView}>
+            <TextInput
+              value={this.state.searchText}
+              onChangeText={this.onChangeText}
+              style={styles.searchInput}
+              autoCompleteType={'name'}
+              autoCapitalize={'none'}
+              placeholder={'Search campaign\'s name'}
+              placeholderTextColor={Colors.foggyGrey}
+            />
+            <View style={styles.iconView}>
+              <Icon name={'search'} size={22} color={Colors.white} />
+            </View>
+          </View>
         </View>
         <FlatList
-          data={this.props.campaigns}
+          data={this.state.searchText === '' ? this.props.campaigns : this.props.searchCampaigns}
           renderItem={this.renderItem}
           keyExtractor={item => item._id}
           contentContainerStyle={{ padding: 10 }}
         // ItemSeparatorComponent={this.renderSeparator}
         />
+        <Modalize
+          ref={this.modal}
+          modalHeight={modalHeight}
+        >
+          <ModalDetail item={this.state.item} handlePressLocation={this.onPressLocation} />
+        </Modalize>
       </SafeAreaView>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  campaigns: state.campaign.campaigns
+  campaigns: state.campaign.campaigns,
+  searchCampaigns: state.campaign.searchCampaigns,
 })
 
 const mapDispatchToProps = dispatch => ({
   getCampaigns: () => dispatch(CampaignActions.getCampaigns()),
+  getCampaignsByName: (name) => dispatch(CampaignActions.getCampaignsByName(name))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignsScreen);

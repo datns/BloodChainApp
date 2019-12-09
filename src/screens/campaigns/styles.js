@@ -12,17 +12,19 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: Colors.coralRed,
-    height: 50,
+    // height: 50,
     width: '100%',
-    // position: 'absolute',
-    // elevation: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
   headerText: {
     color: Colors.white,
     fontFamily: Fonts.bold,
-    fontSize: FontSizes.h3
+    fontSize: FontSizes.h3,
+    marginBottom: 10
   },
   item: {
     backgroundColor: Colors.white,
@@ -86,13 +88,41 @@ const styles = StyleSheet.create({
     opacity: 0.9
   },
   detailText: {
-    position: 'absolute',
-    bottom: 15,
-    right: 20,
     fontFamily: Fonts.bold,
     fontSize: FontSizes.title,
     color: Colors.coralRed,
     opacity: 0.9
+  },
+  detailButton: {
+    position: 'absolute',
+    bottom: 15,
+    right: 20,
+  },
+  modalContainer: {
+    paddingTop: 20,
+    paddingHorizontal: 20
+  },
+  searchInput: {
+    height: 40,
+    flex: 1,
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.title,
+    color: Colors.black
+  },
+  inputView: {
+    flexDirection: 'row',
+    borderColor: Colors.white,
+    borderWidth: StyleSheet.hairlineWidth,
+    height: 40,
+    backgroundColor: Colors.white,
+    borderRadius: 6,
+    overflow: 'hidden'
+  },
+  iconView: {
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.black,
   }
 });
 

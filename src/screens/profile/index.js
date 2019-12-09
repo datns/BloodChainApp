@@ -3,9 +3,11 @@ import { View, Text, Image, SafeAreaView, FlatList, TouchableHighlight, Touchabl
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import IonIcon from 'react-native-vector-icons/Ionicons'
+import FAIcon from 'react-native-vector-icons/FontAwesome'
 
 import Timeline from 'react-native-timeline-flatlist'
 import Modal from "react-native-modal";
+import QRCode from 'react-native-qrcode-svg';
 
 import moment from 'moment'
 
@@ -87,6 +89,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       isVisible: false,
+      showQRCode: false,
       data: [
         { time: '09:00', title: 'Archery Training Archery Training Archery Training', description: 'The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ' },
         { time: '10:45', title: 'Play Badminton', description: 'Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.' },
@@ -99,6 +102,7 @@ class Profile extends Component {
     this.renderInfo = this.renderInfo.bind(this);
     this.renderModal = this.renderModal.bind(this);
     this._renderItem = this._renderItem.bind(this)
+    this.renderQRCode = this.renderQRCode.bind(this);
   }
 
   componentDidMount() {
@@ -143,7 +147,6 @@ class Profile extends Component {
     return (
       <Modal
         isVisible={this.state.isVisible}
-        // onBackdropPress={() => this.setState({ isVisible: false })}
         onBackButtonPress={() => this.setState({ isVisible: false })}
         onBackdropPress={() => this.setState({ isVisible: false })}
       >
@@ -169,6 +172,20 @@ class Profile extends Component {
     )
   }
 
+  renderQRCode() {
+    return (
+      <Modal
+        isVisible={this.state.showQRCode}
+        onBackButtonPress={() => this.setState({ showQRCode: false })}
+        onBackdropPress={() => this.setState({ showQRCode: false })}
+        style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.qrCodeContainer}>
+          <QRCode value={this.props.user._id} size={200} />
+        </View>
+      </Modal>
+    )
+  }
+
   render() {
     const { user } = this.props;
     let isMale = user.gender === 'Male';
@@ -188,6 +205,9 @@ class Profile extends Component {
                 size={24}
                 color={isMale ? Colors.dodgerBlue : Colors.strawberryPink} />
             </View>
+            <TouchableOpacity onPress={() => this.setState({ showQRCode: true })}>
+              <FAIcon name={'qrcode'} size={25} />
+            </TouchableOpacity>
           </View>
           <View style={styles.rightInfo}>
             {this.renderInfo(user.address, 'home')}
@@ -210,6 +230,7 @@ class Profile extends Component {
           />
         </View>
         {this.renderModal()}
+        {this.renderQRCode()}
       </SafeAreaView>
     );
   }

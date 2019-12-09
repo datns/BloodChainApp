@@ -18,3 +18,21 @@ export function* getCampaigns(api) {
     yield put({ type: CampaignTypes.GET_CAMPAIGNS_FAILURE })
   }
 }
+
+export function* getCampaignsByName(api, action) {
+  try {
+    const { name } = action
+    const params = {
+      page: 1,
+      size: 10,
+      sort: '-createdAt',
+      name
+    }
+    const response = yield call(api.getCampaigns, params)
+    const searchCampaigns = response.data.items
+    yield put({ type: CampaignTypes.GET_CAMPAIGNS_BY_NAME_SUCCESS, searchCampaigns })
+  }
+  catch (err) {
+    yield put({ type: CampaignTypes.GET_CAMPAIGNS_BY_NAME_FAILURE })
+  }
+}
