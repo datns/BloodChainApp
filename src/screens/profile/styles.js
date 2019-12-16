@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    marginTop: -20,
+    marginTop: -15,
     backgroundColor: Colors.white
   },
   nameText: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   imageHeader: {
     width: '100%',
-    height: 160
+    height: 200
   },
   subInfo: {
     flexDirection: 'row',
@@ -168,6 +168,13 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     backgroundColor: Colors.white
+  },
+  actionButtonContainer: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-evenly',
+    width: '100%',
+    marginTop: 10,
+    opacity: 0.8
   }
 })
 

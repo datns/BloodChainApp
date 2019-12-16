@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, SafeAreaView, FlatList, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { View, Text, Image, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import IonIcon from 'react-native-vector-icons/Ionicons'
@@ -12,9 +15,12 @@ import QRCode from 'react-native-qrcode-svg';
 import moment from 'moment'
 
 import { connect } from 'react-redux'
+
 import {
   UserActions, BloodPackActions
 } from '../../actions'
+
+import ModalConfirm from '../../components/modal-confirm';
 
 
 import styles from './styles';
@@ -90,6 +96,7 @@ class Profile extends Component {
     this.state = {
       isVisible: false,
       showQRCode: false,
+      showConfirm: false,
       data: [
         { time: '09:00', title: 'Archery Training Archery Training Archery Training', description: 'The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ' },
         { time: '10:45', title: 'Play Badminton', description: 'Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.' },
@@ -103,11 +110,21 @@ class Profile extends Component {
     this.renderModal = this.renderModal.bind(this);
     this._renderItem = this._renderItem.bind(this)
     this.renderQRCode = this.renderQRCode.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
-    // this.props.getUserInfo()
     this.props.getBloodPacks(1)
+  }
+
+  async handleLogout() {
+    try {
+      await AsyncStorage.removeItem('userToken');
+      this.props.navigation.navigate('AuthStack');
+    }
+    catch (err) {
+
+    }
   }
 
   renderInfo(info, iconName) {
@@ -149,6 +166,9 @@ class Profile extends Component {
         isVisible={this.state.isVisible}
         onBackButtonPress={() => this.setState({ isVisible: false })}
         onBackdropPress={() => this.setState({ isVisible: false })}
+        animationIn={'fadeIn'}
+        animationOut={'fadeOut'}
+        backdropTransitionOutTiming={0}
       >
 
         <Timeline
@@ -178,7 +198,10 @@ class Profile extends Component {
         isVisible={this.state.showQRCode}
         onBackButtonPress={() => this.setState({ showQRCode: false })}
         onBackdropPress={() => this.setState({ showQRCode: false })}
-        style={{ justifyContent: 'center', alignItems: 'center' }}>
+        style={{ justifyContent: 'center', alignItems: 'center' }}
+        backdropTransitionOutTiming={0}
+        animationIn={'fadeIn'}
+        animationOut={'fadeOut'}>
         <View style={styles.qrCodeContainer}>
           <QRCode value={this.props.user._id} size={200} />
         </View>
@@ -205,17 +228,23 @@ class Profile extends Component {
                 size={24}
                 color={isMale ? Colors.dodgerBlue : Colors.strawberryPink} />
             </View>
-            <TouchableOpacity onPress={() => this.setState({ showQRCode: true })}>
-              <FAIcon name={'qrcode'} size={25} />
-            </TouchableOpacity>
+            <View style={styles.actionButtonContainer}>
+              <TouchableOpacity onPress={() => this.setState({ showQRCode: true })}>
+                <FAIcon name={'qrcode'} size={25} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.setState({ showConfirm: true })}>
+                <FAIcon name={'sign-out'} size={25} />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.rightInfo}>
-            {this.renderInfo(user.address, 'home')}
+            {this.renderInfo(user.idCardNumber, 'credit-card')}
             {this.renderInfo(user.phone, 'phone')}
             {this.renderInfo(user.email, 'mail')}
+            {this.renderInfo(user.address, 'home')}
           </View>
         </View>
-        <View style={{ flex: 1.3 }}>
+        <View style={{ flex: 1.5 }}>
           <View style={styles.titleHistoryView}>
             <Text style={styles.titleHistory}>{`Donation History`}</Text>
             {/* <View style={styles.timeView}> */}
@@ -231,6 +260,11 @@ class Profile extends Component {
         </View>
         {this.renderModal()}
         {this.renderQRCode()}
+        <ModalConfirm
+          isVisible={this.state.showConfirm}
+          onYesPress={this.handleLogout}
+          onNoPress={() => this.setState({ showConfirm: false })}
+        />
       </SafeAreaView>
     );
   }

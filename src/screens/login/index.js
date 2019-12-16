@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { View, Text, SafeAreaView, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
 
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 import { AuthActions } from '../../actions';
 
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -27,9 +28,11 @@ class LoginScreen extends Component {
     this.props.login(username, password)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.accessToken)
-      nextProps.navigation.navigate('HomeStack')
+  async componentDidUpdate() {
+    if (this.props.accessToken) {
+      await AsyncStorage.setItem('userToken', this.props.accessToken)
+      this.props.navigation.navigate('HomeStack')
+    }
   }
 
   render() {

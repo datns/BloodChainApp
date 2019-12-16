@@ -11,7 +11,7 @@ import {
   RewardTypes,
 } from '../types';
 
-import { login } from './AuthSaga';
+import { login, relogin } from './AuthSaga';
 import { getCampaigns, getCampaignsByName } from './CampaignSaga';
 import { getBloodCamps, getNearbyBloodCamps, getBloodCampsByName } from './BloodCampSaga';
 import { getBloodBanks, getNearbyBloodBanks, getBloodBanksByName } from './BloodBankSaga';
@@ -31,6 +31,7 @@ const api = API.create();
 export default function* root() {
   yield all([
     takeLatest(AuthTypes.LOGIN, login, api),
+    takeLatest(AuthTypes.RELOGIN, relogin, api),
     takeLatest(CampaignTypes.GET_CAMPAIGNS, getCampaigns, api),
     takeLatest(CampaignTypes.GET_CAMPAIGNS_BY_NAME, getCampaignsByName, api),
 

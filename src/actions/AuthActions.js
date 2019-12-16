@@ -4,4 +4,8 @@ const login = (username, password) => ({
   type: AuthTypes.LOGIN, username, password
 })
 
-export { login }
+const relogin = (accessToken) => ({
+  type: AuthTypes.RELOGIN, accessToken
+})
+
+export { login, relogin }

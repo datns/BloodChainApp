@@ -9,9 +9,9 @@ import Rewards from '../screens/rewards';
 
 const MainTab = createBottomTabNavigator({
   Campaigns,
-  Profile,
   Locations,
-  Rewards
+  Rewards,
+  Profile,
 },
   {
     defaultNavigationOptions: ({ navigation }) => ({
