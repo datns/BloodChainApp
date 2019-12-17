@@ -11,6 +11,10 @@ import GetPointsSvg from '../../images/undraw_deliveries_131a.svg';
 import SelectRewardsSvg from '../../images/undraw_selecting_1lx3.svg';
 import VouchersSvg from '../../images/undraw_gift_box_byy3.svg';
 import EthereumSvg from '../../images/ethereum.svg';
+import GoldSvg from '../../images/gold.svg';
+import SilverSvg from '../../images/silver.svg';
+import BronzeSvg from '../../images/bronze.svg';
+
 import { Colors, Fonts } from '../../utils/Themes';
 import { RewardActions } from '../../actions';
 
@@ -50,13 +54,16 @@ const MOCK_DATA = [
 ]
 
 class Rewards extends Component {
-  modal = React.createRef();
+  modalVoucher = React.createRef();
+  modalEthereum = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
     };
 
     this.handleSelectReward = this.handleSelectReward.bind(this);
+    this.handleSelectEthereum = this.handleSelectEthereum.bind(this);
+
   }
 
   componentDidMount() {
@@ -72,10 +79,11 @@ class Rewards extends Component {
     )
   }
 
-  renderReward(vouchers) {
+  renderVoucher(vouchers) {
     return (
       <View>
         <FlatList
+          key={'voucher'}
           data={vouchers}
           renderItem={this.renderVoucherCard}
           keyExtractor={item => item._id}
@@ -86,6 +94,24 @@ class Rewards extends Component {
       </View>
     )
   }
+
+  renderEthereum(plans) {
+    return (
+      <View>
+        <FlatList
+          key={'ethereum'}
+          data={plans}
+          renderItem={this.renderEthereumPlan}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
+          style={{ marginTop: 40 }}
+          scrollEnabled={false}
+        />
+      </View>
+    )
+  }
+
+
 
   renderVoucherCard({ item }) {
     return (
@@ -117,9 +143,42 @@ class Rewards extends Component {
     )
   }
 
+  renderEthereumPlan({ item }) {
+    return (
+      <View style={styles.voucherCardContainer}>
+        <View style={styles.imageContainer}>
+          {item.name == 'GOLD' ? <GoldSvg width={100} height={80} /> : item.name == 'SILVER' ? <SilverSvg width={100} height={80} /> : <BronzeSvg width={100} height={80} />}
+        </View>
+        <View style={{ justifyContent: 'space-between' }}>
+          <View style={styles.dividerVoucher} />
+          <View style={styles.dividerVoucher} />
+          <View style={styles.dividerVoucher} />
+          <View style={styles.dividerVoucher} />
+          <View style={[styles.dividerVoucher, { height: 2 }]} />
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.voucherName}>
+            {item.name.toUpperCase()}
+          </Text>
+          <Text style={styles.voucherDesc}><Text style={styles.voucherQuantity}>{item.eth}</Text> ETH</Text>
+          <Text style={styles.voucherDesc}>{`Plan cost `}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} POINTS`}</Text></Text>
+          <TouchableOpacity style={styles.redeemButton}>
+            <Text style={styles.redeemText}>Redeem</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+
   handleSelectReward() {
-    if (this.modal.current) {
-      this.modal.current.open();
+    if (this.modalVoucher.current) {
+      this.modalVoucher.current.open();
+    }
+  }
+
+  handleSelectEthereum() {
+    if (this.modalEthereum.current) {
+      this.modalEthereum.current.open();
     }
   }
 
@@ -198,7 +257,7 @@ class Rewards extends Component {
                 <VouchersSvg height={80} width={80} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.typeCard}>
+            <TouchableOpacity style={styles.typeCard} onPress={this.handleSelectEthereum}>
               <Text style={styles.type}>Ethereum</Text>
               <View style={{ alignItems: 'flex-end' }}>
                 <EthereumSvg height={80} width={80} />
@@ -217,14 +276,24 @@ class Rewards extends Component {
           />
         </ScrollView>
         <Modalize
-          ref={this.modal}
+          ref={this.modalVoucher}
           modalHeight={modalHeight}
           HeaderComponent={this.renderHeaderReward}
           scrollViewProps={{
             showsVerticalScrollIndicator: false
           }}
         >
-          {this.renderReward(this.props.vouchers)}
+          {this.renderVoucher(this.props.vouchers)}
+        </Modalize>
+        <Modalize
+          ref={this.modalEthereum}
+          modalHeight={modalHeight}
+          HeaderComponent={this.renderHeaderReward}
+          scrollViewProps={{
+            showsVerticalScrollIndicator: false
+          }}
+        >
+          {this.renderEthereum(this.props.ethereums)}
         </Modalize>
       </React.Fragment>
     );

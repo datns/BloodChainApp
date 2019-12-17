@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     width: '100%',
     borderRadius: 6,
-    elevation: 2,
+    elevation: 3,
     flexDirection: 'row',
     paddingVertical: 20,
     marginTop: 10,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   voucherName: {
     fontFamily: Fonts.semi,
-    fontSize: FontSizes.h3,
+    fontSize: FontSizes.title,
     color: Colors.black
   },
   voucherDesc: {

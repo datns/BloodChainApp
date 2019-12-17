@@ -42,20 +42,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 30,
     height: 30,
-    position: 'absolute',
-    left: 10,
-    top: 10
   },
   header: {
-    // justifyContent: 'center',
-    // marginVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingVertical: 10,
-    marginBottom: 20
+    marginBottom: 20,
   },
   wrapName: {
     height: 30,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: 20
   },
   name: {
     fontFamily: Fonts.bold,

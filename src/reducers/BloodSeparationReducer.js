@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
 
     case BloodSeparationTypes.GET_NEARBY_BLOOD_SEPARATIONS:
       return state.merge({ nearbyFetching: true })
-    case BloodSeparationTypes.GET_BLOOD_SEPARATIONS_SUCCESS:
+    case BloodSeparationTypes.GET_NEARBY_BLOOD_SEPARATIONS_SUCCESS:
       return state.merge({ nearbyFetching: false, nearbyBloodSeparations: action.nearbyBloodSeparations, nearbyError: false })
     case BloodSeparationTypes.GET_BLOOD_SEPARATIONS_FAILURE:
       return state.merge({ nearbyFetching: false, nearbyError: true })

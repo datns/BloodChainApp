@@ -107,6 +107,7 @@ class Locations extends Component {
     this.handleBack = this.handleBack.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
     this.onChangeTextDelayed = _.debounce(this.onChangeText, 200);
+    this.getLocation = this.getLocation.bind(this);
   }
 
   componentDidMount() {

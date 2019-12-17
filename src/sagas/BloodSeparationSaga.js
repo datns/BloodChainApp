@@ -33,6 +33,7 @@ export function* getNearbyBloodSeparations(api, action) {
     }
     const response = yield call(api.getBloodSeparations, params)
     const nearbyBloodSeparations = response.data.items
+    console.log('nearby separation', response)
     yield put({ type: BloodSeparationTypes.GET_NEARBY_BLOOD_SEPARATIONS_SUCCESS, nearbyBloodSeparations })
   } catch (err) {
     console.log(err)

@@ -169,6 +169,7 @@ class Profile extends Component {
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
         backdropTransitionOutTiming={0}
+        style={{ padding: 5 }}
       >
 
         <Timeline
@@ -184,6 +185,7 @@ class Profile extends Component {
           // options={{
           //   style: { paddingTop: 5 }
           // }}
+          titleStyle={styles.timelineTitle}
           innerCircle={'icon'}
           onEventPress={this.onEventPress}
           detailContainerStyle={styles.detailContainerStyle}

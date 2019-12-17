@@ -66,7 +66,7 @@ class DetailsScreen extends PureComponent {
           style={styles.gradient}
         />
         <View style={styles.header}>
-          <TouchableOpacity style={styles.closeButton} onPress={this.onClosePress}>
+          <TouchableOpacity style={styles.closeButton} onPress={this.onClosePress} hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}>
             <FeatherIcons name={'x'} size={30} color={Colors.white} />
           </TouchableOpacity>
           <View style={styles.wrapName}>

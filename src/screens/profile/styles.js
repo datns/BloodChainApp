@@ -175,6 +175,11 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
     opacity: 0.8
+  },
+  timelineTitle: {
+    fontFamily: FontSizes.semi,
+    fontSize: FontSizes.title,
+    color: Colors.black
   }
 })
 
