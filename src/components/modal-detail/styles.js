@@ -3,7 +3,7 @@ import { Fonts, FontSizes, Colors } from '../../utils/Themes';
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
+    paddingVertical: 10,
     paddingHorizontal: 20
   },
   header: {
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     color: Colors.black
   },
   imageList: {
-    marginVertical: 20
+    marginTop: 20,
+    marginBottom: 10
   },
   campName: {
     fontFamily: Fonts.medium,

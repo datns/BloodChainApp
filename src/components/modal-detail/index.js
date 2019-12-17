@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, FlatList } from 'react-native';
 import moment from 'moment';
 
 import styles from './styles';
@@ -7,7 +7,7 @@ import styles from './styles';
 const ModalDetail = (props) => {
   const { name, startDate, endDate, description, photos, bloodCamp } = props.item
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       <View style={styles.header}>
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.date}>{`${moment(startDate).format('DD.MM.YYYY')} - ${moment(endDate).format('DD.MM.YYYY')}`}</Text>
@@ -15,16 +15,24 @@ const ModalDetail = (props) => {
       <View style={styles.body}>
         <Text style={styles.description}>{description}</Text>
         <Text style={[styles.date, { marginTop: 20 }]}>Photos</Text>
-        <ScrollView horizontal style={styles.imageList}>
-          {photos.map(photo => (
-            <Image source={{ uri: photo.url }} style={{ width: 180, height: 100 }} key={photo._id} />
-          ))}
-        </ScrollView>
+        <FlatList
+          data={photos}
+          renderItem={_renderItem}
+          keyExtractor={item => item._id}
+          numColumns={2}
+          style={styles.imageList}
+        />
         <Text style={styles.date}>
           Take place in <Text style={styles.campName} onPress={props.handlePressLocation}>{bloodCamp.name}</Text>
         </Text>
       </View>
     </View>)
+}
+
+_renderItem = ({ item }) => {
+  return (
+    <Image source={{ uri: item.url }} style={{ width: '50%', height: 120, marginRight: 5, marginBottom: 5 }} />
+  )
 }
 
 export default ModalDetail;

@@ -32,7 +32,7 @@ import FeatherIcons from 'react-native-vector-icons/Feather';
 import styles from './styles';
 import BloodBankSvg from '../../images/045-first-aid-kit.svg';
 import BloodCampSvg from '../../images/048-blood-transfusion.svg';
-import HospitalSvg from '../../images/034-medical-center.svg';
+import HospitalSvg from '../../images/004-hospital.svg';
 import TestCenterSvg from '../../images/010-microscope.svg';
 import SeparationCenterSvg from '../../images/040-erythrocytes.svg';
 
@@ -84,8 +84,8 @@ class Locations extends Component {
     super(props);
     this.state = {
       region: {
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: 10.869876,
+        longitude: 106.803937,
         latitudeDelta: 0.015,
         longitudeDelta: 0.0121,
       },
@@ -110,13 +110,14 @@ class Locations extends Component {
     this.getLocation = this.getLocation.bind(this);
   }
 
-  componentDidMount() {
-    this.getLocation();
+  async componentDidMount() {
+    await this.getLocation();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedLocation !== prevProps.selectedLocation) {
       // this.onRegionChange(nextProps.selectedLocation)
+      this.setState({ region: this.props.selectedLocation })
       this.mapView.animateToRegion(this.props.selectedLocation, 1000);
       this.getNearbyAll(`${this.props.selectedLocation.longitude},${this.props.selectedLocation.latitude}`)
     }
@@ -166,6 +167,7 @@ class Locations extends Component {
           longitudeDelta: 0.0121,
         }
         this.setState({ region })
+        this.mapView.animateToRegion(region, 1000)
         this.getNearbyAll(`${position.coords.longitude},${position.coords.latitude}`)
       },
       (error) => {
@@ -367,7 +369,6 @@ class Locations extends Component {
         <MapView
           style={styles.mapView}
           initialRegion={this.state.region}
-          // region={this.state.region}
           ref={(ref) => this.mapView = ref}
           // onRegionChange={this.onRegionChange}
           showsUserLocation

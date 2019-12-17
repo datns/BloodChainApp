@@ -20,7 +20,7 @@ function getIconByType(type) {
       break;
     };
     case 'HOSPITAL': {
-      icon = require('../images/034-medical-center.png');
+      icon = require('../images/004-hospital.png');
       break;
     };
   }

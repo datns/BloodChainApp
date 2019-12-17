@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   item: {
     width: viewportWidth - 100,

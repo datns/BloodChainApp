@@ -181,11 +181,11 @@ class Profile extends Component {
           lineWidth={1.5}
           timeContainerStyle={{ minWidth: 52, maxWidth: 80 }}
           timeStyle={styles.timeText}
+          titleStyle={styles.timelineTitle}
           descriptionStyle={styles.descriptionText}
           // options={{
           //   style: { paddingTop: 5 }
           // }}
-          titleStyle={styles.timelineTitle}
           innerCircle={'icon'}
           onEventPress={this.onEventPress}
           detailContainerStyle={styles.detailContainerStyle}

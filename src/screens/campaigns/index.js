@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, FlatList, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, SafeAreaView, FlatList, TextInput, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 
 import { connect } from 'react-redux'
 import Modalize from 'react-native-modalize'
@@ -49,7 +49,7 @@ class CampaignsScreen extends Component {
         <Text style={styles.content}>{bloodCamp.name}</Text>
         <Text style={styles.title}>{'Time'}</Text>
         <Text style={styles.content}>{`${moment(startDate).format('DD.MM.YYYY')} - ${moment(endDate).format('DD.MM.YYYY')}`}</Text>
-        <Text style={styles.statusText}>{isExpired ? 'Expired' : isInProgress ? 'In Progress' : 'Prepared'}</Text>
+        <Text style={styles.statusText}>{isExpired ? 'Finished' : isInProgress ? 'Happenning' : 'Upcoming'}</Text>
         <TouchableOpacity onPress={() => this.handleDetail(item)} style={styles.detailButton}>
           <Text style={styles.detailText}>{'DETAIL'}</Text>
         </TouchableOpacity>
@@ -105,11 +105,16 @@ class CampaignsScreen extends Component {
           renderItem={this.renderItem}
           keyExtractor={item => item._id}
           contentContainerStyle={{ padding: 10 }}
+          showsVerticalScrollIndicator={false}
         // ItemSeparatorComponent={this.renderSeparator}
         />
         <Modalize
           ref={this.modal}
           modalHeight={modalHeight}
+          scrollViewProps={{
+            showsVerticalScrollIndicator: false,
+          }}
+
         >
           <ModalDetail item={this.state.item} handlePressLocation={this.onPressLocation} />
         </Modalize>
