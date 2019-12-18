@@ -33,6 +33,12 @@ const create = () => {
 
   const getEthereumPlan = () => api.get('rewards/ethereum/plans');
 
+  const getTransferHistories = (id) => api.get(`blood-packs/${id}/transfer-histories`);
+
+  const getUserPoint = () => api.get('auth/me/user-info')
+
+  const getPointHistories = () => api.get('auth/me/point-histories')
+
   return {
     login,
     setAccessToken,
@@ -45,7 +51,10 @@ const create = () => {
     getUserInfo,
     getBloodPacks,
     getVouchers,
-    getEthereumPlan
+    getEthereumPlan,
+    getTransferHistories,
+    getUserPoint,
+    getPointHistories
   }
 }
 

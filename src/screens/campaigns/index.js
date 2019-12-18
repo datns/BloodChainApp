@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, FlatList, TextInput, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-
+import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { FlatList } from 'react-navigation'
 import { connect } from 'react-redux'
 import Modalize from 'react-native-modalize'
 import Icon from 'react-native-vector-icons/Feather'

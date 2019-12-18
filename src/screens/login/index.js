@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -28,8 +28,8 @@ class LoginScreen extends Component {
     this.props.login(username, password)
   }
 
-  async componentDidUpdate() {
-    if (this.props.accessToken) {
+  async componentDidUpdate(prevProps) {
+    if (this.props.accessToken !== prevProps.accessToken) {
       await AsyncStorage.setItem('userToken', this.props.accessToken)
       this.props.navigation.navigate('HomeStack')
     }
@@ -72,10 +72,14 @@ class LoginScreen extends Component {
           </View>
         </View>
         <View style={styles.buttonView}>
-          <TouchableOpacity onPress={this.handleLogin}>
+          <TouchableOpacity onPress={this.handleLogin} disabled={this.props.loading}>
             <View style={styles.button}>
-              <Text style={styles.buttonText}>{'Get started'}</Text>
-              <Ionicons name={'ios-arrow-round-forward'} size={38} />
+              {this.props.loading ? <ActivityIndicator color={Colors.easternBlue} size={'large'} /> : (
+                <React.Fragment>
+                  <Text style={styles.buttonText}>{'Get started'}</Text>
+                  <Ionicons name={'ios-arrow-round-forward'} size={38} />
+                </React.Fragment>
+              )}
             </View>
           </TouchableOpacity>
         </View>

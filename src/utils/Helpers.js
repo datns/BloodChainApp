@@ -33,7 +33,7 @@ export function convertTranferHistories(histories) {
   histories.map(data => {
     const tranferObj = {
       time: moment(data.transferedAt).format('h:mm a MMM D, YYYY'),
-      description: `TO: ${data.toName}\n${data.description}`,
+      description: generateDescByType(data),
       title: `${data.fromName}`,
       icon: getIconByType(data.fromType)
     }
@@ -50,4 +50,19 @@ export function generateInfoPack(item) {
   const separated = item.separated ? '• Separated' : '';
 
   return `${time} ${bloodType} ${tested} ${separated} `
+}
+
+function generateDescByType(data) {
+  let description = '';
+
+  if (data.historyType == 4) {
+    const patientName = data.toName.slice(0, data.toName.indexOf(';;;')),
+      patientPhone = data.toName.slice(-10);
+    description = `Patient: ${patientName}\nPhone: ${patientPhone}\n${data.description}`;
+  }
+  else if (data.historyType == 2)
+    description = `Your blood pack has been disposed.\n${data.description}`;
+  else
+    description = `TO: ${data.toName}\n${data.description}`;
+  return description;
 }

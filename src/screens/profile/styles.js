@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   ovalView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '90%',
+    width: '100%',
     height: 40,
     borderRadius: 10,
     borderColor: Colors.coralRed,
     borderWidth: 1,
     alignItems: 'center',
-    paddingHorizontal: 5,
+    paddingHorizontal: 8,
     marginBottom: 5,
     backgroundColor: Colors.coralRed
   },
@@ -180,6 +180,14 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semi,
     fontSize: FontSizes.title,
     color: Colors.black
+  },
+  noAvatarContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: Colors.foggyGrey,
+    borderWidth: 1,
+    borderRadius: 20,
   }
 })
 

@@ -16,42 +16,7 @@ import SilverSvg from '../../images/silver.svg';
 import BronzeSvg from '../../images/bronze.svg';
 
 import { Colors, Fonts } from '../../utils/Themes';
-import { RewardActions } from '../../actions';
-
-const MOCK_DATA = [
-  {
-    updatePointType: 0,
-    amount: 1000,
-    updatedAt: '2019-12-04T14:19:54.000Z',
-    descriptionType: 'Donate Blood',
-    bloodPackId: '5de7c08720899006e423ec44'
-  },
-  {
-    updatePointType: 0,
-    amount: 1000,
-    updatedAt: '2019-12-04T15:08:54.000Z',
-    descriptionType: 'Donate Blood',
-    bloodPackId: '5de7c08720899006e423ec44'
-  },
-  {
-    updatePointType: 1,
-    amount: 100,
-    updatedAt: '2019-12-04T15:17:17.000Z',
-    descriptionType: 'Redeem Voucher',
-    rewardId: '5de7c08720899006e423ec44',
-    rewardName: 'Test 3',
-    code: 'BBB'
-  },
-  {
-    updatePointType: 1,
-    amount: 100,
-    updatedAt: '2019-12-04T15:21:58.000Z',
-    descriptionType: 'Redeem Ethereum',
-    ethAddress: '0xd1FECeEBD23fcB2B360c354Dc46B154B0a6880F',
-    ethAmount: 0.05,
-    transactionId: '0xb30a2ad38db290972a39c71f0dc6fa78b85f74357bda231f022177ecdecab8ee'
-  }
-]
+import { RewardActions, UserActions } from '../../actions';
 
 class Rewards extends Component {
   modalVoucher = React.createRef();
@@ -69,6 +34,8 @@ class Rewards extends Component {
   componentDidMount() {
     this.props.getVouchers();
     this.props.getEthereums();
+    this.props.getPoint();
+    this.props.getPointHistories();
   }
 
   renderHeaderReward() {
@@ -230,7 +197,7 @@ class Rewards extends Component {
         <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             {/* <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: 'white' }}></View> */}
-            <Text style={styles.point}>1500 points</Text>
+            <Text style={styles.point}>{`${this.props.point} point`} </Text>
           </View>
           <View style={styles.introCard}>
             <View>
@@ -266,13 +233,14 @@ class Rewards extends Component {
           </View>
           <Text style={styles.titleHistory}>Point History</Text>
           <FlatList
-            data={MOCK_DATA}
+            data={this.props.pointHistories}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={() => (<View style={styles.dividerHistory} />)}
             contentContainerStyle={{ paddingHorizontal: 10 }}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
+            ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No data</Text>}
           />
         </ScrollView>
         <Modalize
@@ -302,12 +270,16 @@ class Rewards extends Component {
 
 const mapStateToProps = state => ({
   vouchers: state.reward.vouchers,
-  ethereums: state.reward.ethereums
+  ethereums: state.reward.ethereums,
+  point: state.user.point,
+  pointHistories: state.user.pointHistories
 });
 
 const mapDispatchToProps = dispatch => ({
   getVouchers: () => dispatch(RewardActions.getVouchers()),
   getEthereums: () => dispatch(RewardActions.getEthereums()),
+  getPoint: () => dispatch(UserActions.getUserPoint()),
+  getPointHistories: () => dispatch(UserActions.getPointHistories())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rewards);

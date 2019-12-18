@@ -18,8 +18,8 @@ import { getBloodBanks, getNearbyBloodBanks, getBloodBanksByName } from './Blood
 import { getBloodTests, getNearbyBloodTests, getBloodTestsByName } from './BloodTestSaga';
 import { getBloodSeparations, getNearbyBloodSeparations, getBloodSeparationsByName } from './BloodSeparationSaga';
 import { getHospitals, getNearbyHospitals, getHospitalsByName } from './HospitalSaga';
-import { getUserInfo } from './UserSaga';
-import { getBloodPacks } from './BloodPackSaga';
+import { getUserInfo, getUserPoint, getPointHistories } from './UserSaga';
+import { getBloodPacks, getTransferHistories } from './BloodPackSaga';
 import { getVouchers, getEthereums } from './RewardSaga';
 
 import { takeLatest, all } from '@redux-saga/core/effects';
@@ -56,8 +56,11 @@ export default function* root() {
     takeLatest(HospitalTypes.GET_HOSPITALS_BY_NAME, getHospitalsByName, api),
 
     takeLatest(UserTypes.GET_USER_INFO, getUserInfo, api),
+    takeLatest(UserTypes.GET_USER_POINT, getUserPoint, api),
+    takeLatest(UserTypes.GET_POINTS_HISTORIES, getPointHistories, api),
 
     takeLatest(BloodPackTypes.GET_BLOOD_PACKS, getBloodPacks, api),
+    takeLatest(BloodPackTypes.GET_TRANSFER_HISTORIES, getTransferHistories, api),
 
     takeLatest(RewardTypes.GET_VOUCHERS, getVouchers, api),
     takeLatest(RewardTypes.GET_ETHEREUMS, getEthereums, api)

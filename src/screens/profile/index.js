@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Image, SafeAreaView, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import IonIcon from 'react-native-vector-icons/Ionicons'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Timeline from 'react-native-timeline-flatlist'
 import Modal from "react-native-modal";
@@ -26,70 +27,8 @@ import ModalConfirm from '../../components/modal-confirm';
 import styles from './styles';
 import { Colors } from '../../utils/Themes';
 
-import { convertTranferHistories, generateInfoPack } from '../../utils/Helpers';
+import { generateInfoPack } from '../../utils/Helpers';
 
-const HISTORY = [
-  {
-    description: "dat test",
-    fromId: "5d1b0c33c6aa1d71acf7f3e8",
-    fromName: "UIT",
-    fromType: "BLOOD_CAMP",
-    id: "5dc978be13d7ad43181cc885",
-    toId: "5d1f0b850f2be14df8ec8d7d",
-    toName: "Test Blood Test Center X",
-    toType: "BLOOD_TEST_CENTER",
-    transferType: 0,
-    transferedAt: "2019-11-11T15:07:20.000Z",
-  },
-  {
-    description: "dat test",
-    fromId: "5d1f0b850f2be14df8ec8d7d",
-    fromName: "Test Blood Test Center X",
-    fromType: "BLOOD_TEST_CENTER",
-    id: "5dc978be13d7ad43181cc885",
-    toId: "5d1f1472bd12f83f30eec1c3",
-    toName: "Test Blood Separation Center X",
-    toType: "BLOOD_SEPARATION_CENTER",
-    transferType: 0,
-    transferedAt: "2019-11-11T15:11:19.000Z",
-  },
-  {
-    description: "dat test",
-    fromId: "5d1f1472bd12f83f30eec1c3",
-    fromName: "Test Blood Separation Center X",
-    fromType: "BLOOD_SEPARATION_CENTER",
-    id: "5dc97ac013d7ad43181cc8a7",
-    toId: "5d1f1ddeb61e7761e8a9f469",
-    toName: "Test Blood Bank X",
-    toType: "BLOOD_BANK",
-    transferType: 1,
-    transferedAt: "2019-11-11T15:14:44.000Z",
-  },
-  {
-    description: "dat test",
-    fromId: "5d1f1ddeb61e7761e8a9f469",
-    fromName: "Test Blood Bank X",
-    fromType: "BLOOD_BANK",
-    id: "5dc97ac013d7ad43181cc8a7",
-    toId: "5d1f4bbad8ffd05cb4a31f25",
-    toName: "Test Hospital",
-    toType: "HOSPITAL",
-    transferType: 1,
-    transferedAt: "2019-11-11T15:22:54.000Z",
-  },
-  {
-    description: "dat test",
-    fromId: "5d1f4bbad8ffd05cb4a31f25",
-    fromName: "Test Hospital",
-    fromType: "HOSPITAL",
-    id: "5dc97ac013d7ad43181cc8a7",
-    toId: "",
-    toName: "Dat",
-    toType: "",
-    transferType: 2,
-    transferedAt: "2019-11-11T15:23:36.000Z",
-  }
-]
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -97,13 +36,6 @@ class Profile extends Component {
       isVisible: false,
       showQRCode: false,
       showConfirm: false,
-      data: [
-        { time: '09:00', title: 'Archery Training Archery Training Archery Training', description: 'The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ' },
-        { time: '10:45', title: 'Play Badminton', description: 'Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.' },
-        { time: '12:00', title: 'Lunch' },
-        { time: '14:00', title: 'Watch Soccer', description: 'Team sport played between two teams of eleven players with a spherical ball. ' },
-        { time: '16:30', title: 'Go to Fitness center', description: 'Look out for the Best Gym & Fitness Centers around me :)' },
-      ]
     };
 
     this.renderInfo = this.renderInfo.bind(this);
@@ -111,6 +43,7 @@ class Profile extends Component {
     this._renderItem = this._renderItem.bind(this)
     this.renderQRCode = this.renderQRCode.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleBloodPack = this.handleBloodPack.bind(this);
   }
 
   componentDidMount() {
@@ -132,16 +65,21 @@ class Profile extends Component {
       <React.Fragment>
         <View style={styles.ovalView}>
           <FeatherIcon name={iconName} size={20} color={Colors.white} />
-          <Text style={styles.infoText}>{info}</Text>
+          <Text style={styles.infoText} >{info}</Text>
         </View>
       </React.Fragment>
     )
   }
 
+  handleBloodPack(id) {
+    this.props.getHistories(id)
+    this.setState({ isVisible: true });
+  }
+
   _renderItem({ item }) {
     return (
       // <React.Fragment>
-      <TouchableOpacity style={styles.itemContainer} onPress={() => this.setState({ isVisible: true })}>
+      <TouchableOpacity style={styles.itemContainer} onPress={() => this.handleBloodPack(item._id)}>
         <View style={styles.bloodPackView}>
           <View style={styles.bloodPackHeader} />
           <View style={styles.bloodTypeView}>
@@ -171,25 +109,29 @@ class Profile extends Component {
         backdropTransitionOutTiming={0}
         style={{ padding: 5 }}
       >
-
-        <Timeline
-          style={styles.timelineStyle}
-          data={convertTranferHistories(HISTORY)}
-          circleSize={30}
-          // circleColor='rgb(45,156,219)'
-          lineColor={Colors.blood}
-          lineWidth={1.5}
-          timeContainerStyle={{ minWidth: 52, maxWidth: 80 }}
-          timeStyle={styles.timeText}
-          titleStyle={styles.timelineTitle}
-          descriptionStyle={styles.descriptionText}
-          // options={{
-          //   style: { paddingTop: 5 }
-          // }}
-          innerCircle={'icon'}
-          onEventPress={this.onEventPress}
-          detailContainerStyle={styles.detailContainerStyle}
-        />
+        {this.props.transferFetching ? <ActivityIndicator color={Colors.easternBlue} size={'large'} /> : (
+          <View style={styles.timelineStyle}>
+            {this.props.histories.length === 0 ? (<Text style={{ textAlign: 'center' }}>No data</Text>) : (
+              <Timeline
+                // style={styles.timelineStyle}
+                data={this.props.histories}
+                circleSize={30}
+                lineColor={Colors.blood}
+                lineWidth={1.5}
+                timeContainerStyle={{ minWidth: 52, maxWidth: 80 }}
+                timeStyle={styles.timeText}
+                titleStyle={styles.timelineTitle}
+                descriptionStyle={styles.descriptionText}
+                innerCircle={'icon'}
+                onEventPress={this.onEventPress}
+                detailContainerStyle={styles.detailContainerStyle}
+                options={{
+                  showsVerticalScrollIndicator: false
+                }}
+              />
+            )}
+          </View>
+        )}
       </Modal>
     )
   }
@@ -220,7 +162,11 @@ class Profile extends Component {
         <View style={styles.infoView}>
           <View style={styles.leftInfo}>
             <View style={styles.avatar}>
-              <Image source={{ uri: user.photo.url }} style={{ flex: 1 }} />
+              {user.photo && user.photo.url ? (
+                <Image source={{ uri: user.photo.url }} style={{ flex: 1 }} />
+              ) : <View style={styles.noAvatarContainer}>
+                  <MCIcon name={'face-recognition'} size={40} color={Colors.foggyGrey} />
+                </View>}
             </View>
             <Text style={styles.nameText} >{`${user.firstName} ${user.lastName}`}</Text>
             <View style={styles.subInfo}>
@@ -275,11 +221,14 @@ class Profile extends Component {
 const mapStateToProps = state => ({
   user: state.user.user,
   packs: state.bloodPack.bloodPacks,
-  total: state.bloodPack.total
+  total: state.bloodPack.total,
+  histories: state.bloodPack.transferHistories,
+  transferFetching: state.bloodPack.transferFetching
 })
 
 const mapDispatchToProps = dispatch => ({
   getUserInfo: () => dispatch(UserActions.getUserInfo()),
-  getBloodPacks: page => dispatch(BloodPackActions.getBloodPacks(page))
+  getBloodPacks: page => dispatch(BloodPackActions.getBloodPacks(page)),
+  getHistories: id => dispatch(BloodPackActions.getTransferHistories(id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -28,7 +28,6 @@ const Colors = {
   white: "#FFFFFF",
   gray: "#696969",
   gray2: "#F6F5F5",
-  white: "#FFF",
   darkGray: "#a9a9a9",
   foggyGrey: "#a7a498",
   whiteSmoke: "#f5f5f5",
