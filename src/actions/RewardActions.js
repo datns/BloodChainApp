@@ -8,4 +8,12 @@ const getEthereums = () => ({
   type: RewardTypes.GET_ETHEREUMS
 })
 
-export { getVouchers, getEthereums }
+const redeemVoucher = (id) => ({
+  type: RewardTypes.REDEEM_VOUCHER, id
+})
+
+const redeemEthereum = (planName, address) => ({
+  type: RewardTypes.REDEEM_ETHEREUM, planName, address
+})
+
+export { getVouchers, getEthereums, redeemVoucher, redeemEthereum }

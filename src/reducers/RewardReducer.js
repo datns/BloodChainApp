@@ -7,7 +7,13 @@ const initialState = Immutable({
   errorVoucher: false,
   ethereums: [],
   fetchingEthereum: false,
-  errorEthereum: false
+  errorEthereum: false,
+  redeemedVoucher: {},
+  redeemVoucherFetching: false,
+  redeemVoucherError: false,
+  redeemedEthereum: {},
+  redeemEthereumFetching: false,
+  redeemEthereumError: false
 })
 
 export default (state = initialState, action) => {
@@ -25,6 +31,20 @@ export default (state = initialState, action) => {
       return state.merge({ fetchingEthereum: false, ethereums: action.ethereums, errorEthereum: false });
     case RewardTypes.GET_ETHEREUMS_FAILURE:
       return state.merge({ fetchingEthereum: false, errorEthereum: true })
+
+    case RewardTypes.REDEEM_VOUCHER:
+      return state.merge({ redeemVoucherFetching: true })
+    case RewardTypes.REDEEM_VOUCHER_SUCCESS:
+      return state.merge({ redeemVoucherFetching: false, redeemedVoucher: voucher, redeemVoucherError: false })
+    case RewardTypes.REDEEM_VOUCHER_FAILURE:
+      return state.merge({ redeemVoucherFetching: false, redeemVoucherError: true })
+
+    case RewardTypes.REDEEM_ETHEREUM:
+      return state.merge({ redeemEthereumFetching: true })
+    case RewardTypes.REDEEM_ETHEREUM_SUCCESS:
+      return state.merge({ redeemEthereumFetching: false, redeemedEthereum: ethereum, redeemEthereumError: false })
+    case RewardTypes.REDEEM_ETHEREUM_FAILURE:
+      return state.merge({ redeemEthereumFetching: false, redeemEthereumError: true })
     default: return state
   }
 }

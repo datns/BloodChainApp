@@ -14,7 +14,7 @@ class ModalConfirm extends Component {
   }
 
   render() {
-    const { onYesPress, onNoPress } = this.props;
+    const { onYesPress, onNoPress, title, description } = this.props;
     return (
       <Modal
         isVisible={this.props.isVisible}
@@ -25,8 +25,8 @@ class ModalConfirm extends Component {
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}>
         <View style={styles.container}>
-          <Text style={styles.title}>LOGOUT</Text>
-          <Text style={styles.desc}>Are you sure to logout?</Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.desc}>{description}</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={onYesPress}>
               <Text style={styles.buttonText}>YES</Text>

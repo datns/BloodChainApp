@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case AuthTypes.LOGIN: return state.merge({ loading: true })
     case AuthTypes.LOGIN_SUCCESS:
-      return state.merge({ loading: false, accessToken: action.accessToken })
+      return state.merge({ loading: false, accessToken: action.accessToken, error: false })
     case AuthTypes.LOGIN_FAILURE: return state.merge({ loading: false, error: true })
     case AuthTypes.RELOGIN: return state.merge({
       accessToken: action.accessToken

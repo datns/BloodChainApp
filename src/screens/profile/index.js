@@ -170,7 +170,7 @@ class Profile extends Component {
             </View>
             <Text style={styles.nameText} >{`${user.firstName} ${user.lastName}`}</Text>
             <View style={styles.subInfo}>
-              <Text style={styles.birthdayText}>{moment(user.birthday).format('L')}</Text>
+              <Text style={styles.birthdayText}>{moment(user.birthday).format('DD/MM/YYYY')}</Text>
               <IonIcon
                 name={isMale ? 'ios-male' : 'ios-female'}
                 size={24}
@@ -204,12 +204,15 @@ class Profile extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={this._renderItem}
             contentContainerStyle={{ paddingHorizontal: 20 }}
+            ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No data</Text>}
           />
         </View>
         {this.renderModal()}
         {this.renderQRCode()}
         <ModalConfirm
           isVisible={this.state.showConfirm}
+          title={'LOGOUT'}
+          description={'Are you sure to logout?'}
           onYesPress={this.handleLogout}
           onNoPress={() => this.setState({ showConfirm: false })}
         />

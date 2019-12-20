@@ -17,6 +17,7 @@ import BronzeSvg from '../../images/bronze.svg';
 
 import { Colors, Fonts } from '../../utils/Themes';
 import { RewardActions, UserActions } from '../../actions';
+import ModalConfirm from '../../components/modal-confirm';
 
 class Rewards extends Component {
   modalVoucher = React.createRef();
@@ -24,11 +25,16 @@ class Rewards extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showConfirm: false,
+      selectedReward: {}
     };
 
     this.handleSelectReward = this.handleSelectReward.bind(this);
     this.handleSelectEthereum = this.handleSelectEthereum.bind(this);
-
+    this.renderVoucherCard = this.renderVoucherCard.bind(this);
+    this.renderEthereumPlan = this.renderEthereumPlan.bind(this);
+    this.requestRedeem = this.requestRedeem.bind(this);
+    this.handleRedeemVoucher = this.handleRedeemVoucher.bind(this);
   }
 
   componentDidMount() {
@@ -78,9 +84,9 @@ class Rewards extends Component {
     )
   }
 
-
-
   renderVoucherCard({ item }) {
+    const isUnavailable = this.props.point < item.point;
+    const backgroundButton = { backgroundColor: isUnavailable ? Colors.darkGray : Colors.dodgerBlue }
     return (
       <View style={styles.voucherCardContainer}>
         <View style={styles.imageContainer}>
@@ -101,7 +107,7 @@ class Rewards extends Component {
           <Text style={styles.voucherDesc}>{`Voucher cost `}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} POINTS`}</Text></Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.voucherDesc}>Remain <Text style={styles.voucherQuantity}>{item.quantity}</Text> voucher(s)</Text>
-            <TouchableOpacity style={styles.redeemButton}>
+            <TouchableOpacity style={[styles.redeemButton, backgroundButton]} onPress={() => this.requestRedeem(item)} disabled={isUnavailable}>
               <Text style={styles.redeemText}>Redeem</Text>
             </TouchableOpacity>
           </View>
@@ -111,6 +117,8 @@ class Rewards extends Component {
   }
 
   renderEthereumPlan({ item }) {
+    const isUnavailable = this.props.point < item.point;
+    const backgroundButton = { backgroundColor: isUnavailable ? Colors.darkGray : Colors.dodgerBlue }
     return (
       <View style={styles.voucherCardContainer}>
         <View style={styles.imageContainer}>
@@ -129,7 +137,7 @@ class Rewards extends Component {
           </Text>
           <Text style={styles.voucherDesc}><Text style={styles.voucherQuantity}>{item.eth}</Text> ETH</Text>
           <Text style={styles.voucherDesc}>{`Plan cost `}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} POINTS`}</Text></Text>
-          <TouchableOpacity style={styles.redeemButton}>
+          <TouchableOpacity style={[styles.redeemButton, backgroundButton]} disabled={isUnavailable}>
             <Text style={styles.redeemText}>Redeem</Text>
           </TouchableOpacity>
         </View>
@@ -147,6 +155,14 @@ class Rewards extends Component {
     if (this.modalEthereum.current) {
       this.modalEthereum.current.open();
     }
+  }
+
+  requestRedeem(selectedReward) {
+    this.setState({ showConfirm: true, selectedReward })
+  }
+
+  handleRedeemVoucher() {
+    this.props.redeemVoucher(this.state.selectedReward._id);
   }
 
   _renderItem({ item }) {
@@ -190,7 +206,7 @@ class Rewards extends Component {
   }
 
   render() {
-    const modalHeight = Dimensions.get('window').height * 0.6;
+    const modalHeight = Dimensions.get('window').height * 0.55;
 
     return (
       <React.Fragment>
@@ -242,6 +258,13 @@ class Rewards extends Component {
             scrollEnabled={false}
             ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No data</Text>}
           />
+          <ModalConfirm
+            isVisible={this.state.showConfirm}
+            title={'CONFIRM'}
+            description={`Are you sure you want to redeem ${this.state.selectedReward.name}?`}
+            onYesPress={this.handleRedeemVoucher}
+            onNoPress={() => this.setState({ showConfirm: false })}
+          />
         </ScrollView>
         <Modalize
           ref={this.modalVoucher}
@@ -279,7 +302,8 @@ const mapDispatchToProps = dispatch => ({
   getVouchers: () => dispatch(RewardActions.getVouchers()),
   getEthereums: () => dispatch(RewardActions.getEthereums()),
   getPoint: () => dispatch(UserActions.getUserPoint()),
-  getPointHistories: () => dispatch(UserActions.getPointHistories())
+  getPointHistories: () => dispatch(UserActions.getPointHistories()),
+  redeemVoucher: (id) => dispatch(RewardActions.redeemVoucher(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rewards);

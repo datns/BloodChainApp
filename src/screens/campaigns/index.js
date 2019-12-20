@@ -23,18 +23,20 @@ class CampaignsScreen extends Component {
     super(props);
     this.state = {
       item: {},
-      searchText: ''
+      searchText: '',
+      page: 1
     };
     this.handleDetail = this.handleDetail.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.onPressLocation = this.onPressLocation.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
-    this.onChangeTextDelayed = _.debounce(this.onChangeText, 200)
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 200);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
 
   }
 
   componentDidMount() {
-    this.props.getCampaigns();
+    this.props.getCampaigns(this.state.page);
   }
 
   renderItem({ item }) {
@@ -79,6 +81,18 @@ class CampaignsScreen extends Component {
     this.props.getCampaignsByName(searchText)
   }
 
+  handleLoadMore() {
+    this.setState((prevState) => ({
+      page: prevState.page + 1
+    }),
+      () => this.props.getCampaigns(this.state.page));
+  }
+
+  // componentDidUpdate(prevState) {
+  //   if (prevState.page !== this.state.page)
+  //     this.props.getCampaigns(this.state.page)
+  // }
+
   render() {
     const modalHeight = Dimensions.get('window').height * 0.5;
     return (
@@ -106,7 +120,10 @@ class CampaignsScreen extends Component {
           keyExtractor={item => item._id}
           contentContainerStyle={{ padding: 10 }}
           showsVerticalScrollIndicator={false}
-        // ItemSeparatorComponent={this.renderSeparator}
+          refreshing={this.props.fetching}
+          onRefresh={() => this.props.getCampaigns(this.state.page)}
+          onEndReached={this.handleLoadMore}
+          onEndReachedThreshold={0.01}
         />
         <Modalize
           ref={this.modal}
@@ -126,10 +143,11 @@ class CampaignsScreen extends Component {
 const mapStateToProps = state => ({
   campaigns: state.campaign.campaigns,
   searchCampaigns: state.campaign.searchCampaigns,
+  fetching: state.campaign.fetching
 })
 
 const mapDispatchToProps = dispatch => ({
-  getCampaigns: () => dispatch(CampaignActions.getCampaigns()),
+  getCampaigns: (page) => dispatch(CampaignActions.getCampaigns(page)),
   getCampaignsByName: (name) => dispatch(CampaignActions.getCampaignsByName(name))
 })
 

@@ -1,4 +1,4 @@
-import { RewardTypes } from '../types';
+import { RewardTypes, UserTypes } from '../types';
 
 import { put, call } from 'redux-saga/effects'
 
@@ -28,5 +28,33 @@ export function* getEthereums(api) {
   catch (err) {
     console.log('eth', err)
     yield put({ type: RewardTypes.GET_ETHEREUMS_FAILURE })
+  }
+}
+
+export function* redeemVoucher(api, action) {
+  try {
+    const response = yield call(api.redeemVoucher, action.id);
+    const voucher = response.data
+    yield put({ type: RewardTypes.REDEEM_VOUCHER_SUCCESS, voucher })
+    yield put({ type: UserTypes.GET_USER_POINT })
+    yield put({ type: UserTypes.GET_POINTS_HISTORIES })
+    yield put({ type: RewardTypes.GET_VOUCHERS })
+  }
+  catch (err) {
+    yield put({ type: RewardTypes.REDEEM_VOUCHER_FAILURE })
+  }
+}
+
+export function* redeemEthereum(api, action) {
+  try {
+    const response = yield call(api.redeemEthereum, action.planName, action.address);
+    const ethereum = response.data
+    yield put({ type: RewardTypes.REDEEM_ETHEREUM_SUCCESS, ethereum })
+    yield put({ type: UserTypes.GET_USER_POINT })
+    yield put({ type: UserTypes.GET_POINTS_HISTORIES })
+    yield put({ type: RewardTypes.GET_ETHEREUMS })
+  }
+  catch (err) {
+    yield put({ type: RewardTypes.REDEEM_ETHEREUM_FAILURE })
   }
 }

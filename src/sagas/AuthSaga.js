@@ -22,7 +22,6 @@ export function* relogin(api, action) {
   try {
     const { accessToken } = action;
     yield call(api.setAccessToken, accessToken)
-    // yield put({ type: AuthTypes.RELOGIN, accessToken })
     yield put({ type: UserTypes.GET_USER_INFO })
   } catch (err) {
     console.log(err)

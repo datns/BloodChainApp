@@ -1,7 +1,7 @@
 import { CampaignTypes } from '../types';
 
-const getCampaigns = () => ({
-  type: CampaignTypes.GET_CAMPAIGNS
+const getCampaigns = (page) => ({
+  type: CampaignTypes.GET_CAMPAIGNS, page
 })
 
 const getCampaignsByName = (name) => ({

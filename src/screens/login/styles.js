@@ -55,6 +55,12 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semi,
     fontSize: FontSizes.h3,
     color: 'black'
+  },
+  error: {
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.title,
+    color: 'red',
+    textAlign: 'center'
   }
 });
 

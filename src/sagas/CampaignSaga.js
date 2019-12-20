@@ -1,17 +1,20 @@
 import { CampaignTypes } from '../types';
 
-import { put, call } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 
-export function* getCampaigns(api) {
+export const getCurrenCampaigns = (state) => state.campaign && state.campaign.campaigns
+export function* getCampaigns(api, action) {
   try {
+    const { page } = action;
     const params = {
-      page: 1,
+      page,
       size: 10,
       sort: '-createdAt'
     }
+    const currents = yield select(getCurrenCampaigns);
     const response = yield call(api.getCampaigns, params)
     // console.log(response)
-    const campaigns = response.data.items
+    const campaigns = page === 1 ? [...response.data.items] : [...currents, ...response.data.items]
     yield put({ type: CampaignTypes.GET_CAMPAIGNS_SUCCESS, campaigns })
   } catch (err) {
     console.log(err)

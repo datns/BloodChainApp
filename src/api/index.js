@@ -39,6 +39,10 @@ const create = () => {
 
   const getPointHistories = () => api.get('auth/me/point-histories')
 
+  const redeemVoucher = (id) => api.post(`rewards/${id}/redeem`)
+
+  const redeemEthereum = (planName, address) => api.post('rewards/ethereum/redeem', { planName, address })
+
   return {
     login,
     setAccessToken,
@@ -54,7 +58,9 @@ const create = () => {
     getEthereumPlan,
     getTransferHistories,
     getUserPoint,
-    getPointHistories
+    getPointHistories,
+    redeemVoucher,
+    redeemEthereum
   }
 }
 

@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   ovalView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
+    width: '95%',
     height: 40,
     borderRadius: 10,
     borderColor: Colors.coralRed,
     borderWidth: 1,
     alignItems: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     marginBottom: 5,
     backgroundColor: Colors.coralRed
   },
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: Fonts.semi,
     fontSize: FontSizes.body,
-    color: Colors.white
+    color: Colors.white,
+    marginLeft: 10
   },
   imageHeader: {
     width: '100%',

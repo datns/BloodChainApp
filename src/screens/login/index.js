@@ -15,8 +15,8 @@ class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'admin',
-      password: 'password',
+      username: '',
+      password: '',
     };
 
     this.handleLogin = this.handleLogin.bind(this)
@@ -54,6 +54,7 @@ class LoginScreen extends Component {
               value={this.state.username}
               autoCompleteType={'username'}
               onChangeText={text => this.setState({ username: text })}
+              autoCapitalize={'none'}
             />
             <View style={styles.divider} />
           </View>
@@ -67,10 +68,12 @@ class LoginScreen extends Component {
               value={this.state.password}
               onChangeText={text => this.setState({ password: text })}
               secureTextEntry={true}
+              autoCapitalize={'none'}
             />
             <View style={styles.divider} />
           </View>
         </View>
+        {this.props.error && <Text style={styles.error}>Username or password is incorrect</Text>}
         <View style={styles.buttonView}>
           <TouchableOpacity onPress={this.handleLogin} disabled={this.props.loading}>
             <View style={styles.button}>
@@ -90,7 +93,8 @@ class LoginScreen extends Component {
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
-  accessToken: state.auth.accessToken
+  accessToken: state.auth.accessToken,
+  error: state.auth.error
 })
 
 const mapDispatchToProps = dispatch => ({
