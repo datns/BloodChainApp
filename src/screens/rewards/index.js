@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, Dimensions, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -26,15 +26,21 @@ class Rewards extends Component {
     super(props);
     this.state = {
       showConfirm: false,
-      selectedReward: {}
+      selectedVoucher: {},
+      showConfirmEthereum: false,
+      selectedPlan: {},
+      showResult: false,
+      address: ''
     };
 
     this.handleSelectReward = this.handleSelectReward.bind(this);
     this.handleSelectEthereum = this.handleSelectEthereum.bind(this);
     this.renderVoucherCard = this.renderVoucherCard.bind(this);
     this.renderEthereumPlan = this.renderEthereumPlan.bind(this);
-    this.requestRedeem = this.requestRedeem.bind(this);
+    this.requestRedeemVoucher = this.requestRedeemVoucher.bind(this);
+    this.requestRedeemEthereum = this.requestRedeemEthereum.bind(this);
     this.handleRedeemVoucher = this.handleRedeemVoucher.bind(this);
+    this.handleRedeemEthereum = this.handleRedeemEthereum.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +48,12 @@ class Rewards extends Component {
     this.props.getEthereums();
     this.props.getPoint();
     this.props.getPointHistories();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.redeemedVoucher !== this.props.redeemedVoucher
+      || prevProps.redeemedEthereum !== this.props.redeemedEthereum)
+      this.setState({ showResult: true })
   }
 
   renderHeaderReward() {
@@ -71,13 +83,19 @@ class Rewards extends Component {
   renderEthereum(plans) {
     return (
       <View>
+        <TextInput
+          value={this.state.address}
+          onChangeText={text => this.setState({ address: text })}
+          style={styles.addressInput}
+          placeholder={'Input address before redeem'}
+        />
         <FlatList
           key={'ethereum'}
           data={plans}
           renderItem={this.renderEthereumPlan}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
-          style={{ marginTop: 40 }}
+          style={{ marginTop: 10 }}
           scrollEnabled={false}
         />
       </View>
@@ -107,7 +125,7 @@ class Rewards extends Component {
           <Text style={styles.voucherDesc}>{`Voucher cost `}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} POINTS`}</Text></Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.voucherDesc}>Remain <Text style={styles.voucherQuantity}>{item.quantity}</Text> voucher(s)</Text>
-            <TouchableOpacity style={[styles.redeemButton, backgroundButton]} onPress={() => this.requestRedeem(item)} disabled={isUnavailable}>
+            <TouchableOpacity style={[styles.redeemButton, backgroundButton]} onPress={() => this.requestRedeemVoucher(item)} disabled={isUnavailable}>
               <Text style={styles.redeemText}>Redeem</Text>
             </TouchableOpacity>
           </View>
@@ -117,7 +135,7 @@ class Rewards extends Component {
   }
 
   renderEthereumPlan({ item }) {
-    const isUnavailable = this.props.point < item.point;
+    const isUnavailable = this.props.point < item.point || !this.isValidAddress(this.state.address);
     const backgroundButton = { backgroundColor: isUnavailable ? Colors.darkGray : Colors.dodgerBlue }
     return (
       <View style={styles.voucherCardContainer}>
@@ -137,7 +155,7 @@ class Rewards extends Component {
           </Text>
           <Text style={styles.voucherDesc}><Text style={styles.voucherQuantity}>{item.eth}</Text> ETH</Text>
           <Text style={styles.voucherDesc}>{`Plan cost `}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} POINTS`}</Text></Text>
-          <TouchableOpacity style={[styles.redeemButton, backgroundButton]} disabled={isUnavailable}>
+          <TouchableOpacity style={[styles.redeemButton, backgroundButton]} disabled={isUnavailable} onPress={() => this.requestRedeemEthereum(item)}>
             <Text style={styles.redeemText}>Redeem</Text>
           </TouchableOpacity>
         </View>
@@ -157,12 +175,22 @@ class Rewards extends Component {
     }
   }
 
-  requestRedeem(selectedReward) {
-    this.setState({ showConfirm: true, selectedReward })
+  requestRedeemVoucher(selectedVoucher) {
+    this.setState({ showConfirm: true, selectedVoucher })
+  }
+
+  requestRedeemEthereum(selectedPlan) {
+    this.setState({ showConfirmEthereum: true, selectedPlan })
   }
 
   handleRedeemVoucher() {
-    this.props.redeemVoucher(this.state.selectedReward._id);
+    this.props.redeemVoucher(this.state.selectedVoucher._id);
+    // this.setState({ showConfirm: false })
+  }
+
+  handleRedeemEthereum() {
+    this.props.redeemEthereum(this.state.selectedPlan.name, this.state.address);
+    // this.setState({ showConfirmEthereum: false })
   }
 
   _renderItem({ item }) {
@@ -205,9 +233,12 @@ class Rewards extends Component {
     )
   }
 
+  isValidAddress(address) {
+    return address.length === 42
+  }
+
   render() {
     const modalHeight = Dimensions.get('window').height * 0.55;
-
     return (
       <React.Fragment>
         <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
@@ -261,9 +292,23 @@ class Rewards extends Component {
           <ModalConfirm
             isVisible={this.state.showConfirm}
             title={'CONFIRM'}
-            description={`Are you sure you want to redeem ${this.state.selectedReward.name}?`}
+            description={`Are you sure you want to redeem ${this.state.selectedVoucher.name}?`}
             onYesPress={this.handleRedeemVoucher}
-            onNoPress={() => this.setState({ showConfirm: false })}
+            onNoPress={() => this.setState({ showConfirm: false, showResult: false })}
+            loading={this.props.redeemVoucherFetching}
+            voucher={this.props.redeemedVoucher && this.props.redeemedVoucher.code}
+            showResult={this.state.showResult}
+          />
+          <ModalConfirm
+            address={this.state.address}
+            isVisible={this.state.showConfirmEthereum}
+            title={'CONFIRM'}
+            description={`Are you sure you want to redeem ${this.state.selectedPlan.name}?`}
+            onYesPress={this.handleRedeemEthereum}
+            onNoPress={() => this.setState({ showConfirmEthereum: false, showResult: false })}
+            loading={this.props.redeemEthereumFetching}
+            ethereum={this.props.redeemedEthereum && this.props.redeemedEthereum.transactionId}
+            showResult={this.state.showResult}
           />
         </ScrollView>
         <Modalize
@@ -295,7 +340,11 @@ const mapStateToProps = state => ({
   vouchers: state.reward.vouchers,
   ethereums: state.reward.ethereums,
   point: state.user.point,
-  pointHistories: state.user.pointHistories
+  pointHistories: state.user.pointHistories,
+  redeemVoucherFetching: state.reward.redeemVoucherFetching,
+  redeemEthereumFetching: state.reward.redeemEthereumFetching,
+  redeemedVoucher: state.reward.redeemedVoucher,
+  redeemedEthereum: state.reward.redeemedEthereum,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -303,7 +352,8 @@ const mapDispatchToProps = dispatch => ({
   getEthereums: () => dispatch(RewardActions.getEthereums()),
   getPoint: () => dispatch(UserActions.getUserPoint()),
   getPointHistories: () => dispatch(UserActions.getPointHistories()),
-  redeemVoucher: (id) => dispatch(RewardActions.redeemVoucher(id))
+  redeemVoucher: (id) => dispatch(RewardActions.redeemVoucher(id)),
+  redeemEthereum: (planName, address) => dispatch(RewardActions.redeemEthereum(planName, address))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rewards);

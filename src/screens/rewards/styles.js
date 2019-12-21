@@ -176,7 +176,16 @@ const styles = StyleSheet.create({
     width: 2,
     backgroundColor: Colors.foggyGrey,
     borderRadius: 8,
-
+  },
+  addressInput: {
+    height: 35,
+    borderRadius: 6,
+    borderColor: Colors.gray,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginHorizontal: 15,
+    marginTop: 40,
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.subTitle
   }
 })
 

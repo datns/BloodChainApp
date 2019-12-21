@@ -32,7 +32,7 @@ class CampaignsScreen extends Component {
     this.onChangeText = this.onChangeText.bind(this);
     this.onChangeTextDelayed = _.debounce(this.onChangeText, 200);
     this.handleLoadMore = this.handleLoadMore.bind(this);
-
+    this.handleRefresh = this.handleRefresh.bind(this);
   }
 
   componentDidMount() {
@@ -88,6 +88,14 @@ class CampaignsScreen extends Component {
       () => this.props.getCampaigns(this.state.page));
   }
 
+  handleRefresh() {
+    this.setState((prevState) => ({
+      page: 1
+    }),
+      () => this.props.getCampaigns(this.state.page)
+    )
+  }
+
   // componentDidUpdate(prevState) {
   //   if (prevState.page !== this.state.page)
   //     this.props.getCampaigns(this.state.page)
@@ -121,7 +129,7 @@ class CampaignsScreen extends Component {
           contentContainerStyle={{ padding: 10 }}
           showsVerticalScrollIndicator={false}
           refreshing={this.props.fetching}
-          onRefresh={() => this.props.getCampaigns(this.state.page)}
+          onRefresh={this.handleRefresh}
           onEndReached={this.handleLoadMore}
           onEndReachedThreshold={0.01}
         />

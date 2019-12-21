@@ -41,6 +41,7 @@ export function* redeemVoucher(api, action) {
     yield put({ type: RewardTypes.GET_VOUCHERS })
   }
   catch (err) {
+    console.log('redeem', err)
     yield put({ type: RewardTypes.REDEEM_VOUCHER_FAILURE })
   }
 }
@@ -52,9 +53,9 @@ export function* redeemEthereum(api, action) {
     yield put({ type: RewardTypes.REDEEM_ETHEREUM_SUCCESS, ethereum })
     yield put({ type: UserTypes.GET_USER_POINT })
     yield put({ type: UserTypes.GET_POINTS_HISTORIES })
-    yield put({ type: RewardTypes.GET_ETHEREUMS })
   }
   catch (err) {
+    console.log('redeem', err)
     yield put({ type: RewardTypes.REDEEM_ETHEREUM_FAILURE })
   }
 }

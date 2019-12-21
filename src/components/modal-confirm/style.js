@@ -4,11 +4,11 @@ import { Colors, Fonts, FontSizes } from '../../utils/Themes'
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    height: '20%',
+    height: '25%',
     backgroundColor: Colors.white,
     borderRadius: 10,
     // alignItems: 'center',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   title: {
     fontFamily: Fonts.bold,
@@ -33,15 +33,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 5,
-    // borderWidth: 1,
-    // borderColor: Colors.darkGray,
     backgroundColor: Colors.coralRed
   },
   buttonText: {
     fontFamily: Fonts.bold,
     fontSize: FontSizes.title,
     color: Colors.white
-  }
+  },
+  infoText: {
+    fontFamily: Fonts.semi,
+    fontSize: FontSizes.h3,
+    color: Colors.black,
+    textAlign: 'center',
+  },
+  infoContainer: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    paddingHorizontal: 10
+  },
+  infoMetric: {
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.title,
+    color: Colors.foggyGrey,
+    textAlign: 'center'
+  },
 })
 
 export default styles;

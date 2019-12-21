@@ -35,14 +35,14 @@ export default (state = initialState, action) => {
     case RewardTypes.REDEEM_VOUCHER:
       return state.merge({ redeemVoucherFetching: true })
     case RewardTypes.REDEEM_VOUCHER_SUCCESS:
-      return state.merge({ redeemVoucherFetching: false, redeemedVoucher: voucher, redeemVoucherError: false })
+      return state.merge({ redeemVoucherFetching: false, redeemedVoucher: action.voucher, redeemVoucherError: false })
     case RewardTypes.REDEEM_VOUCHER_FAILURE:
       return state.merge({ redeemVoucherFetching: false, redeemVoucherError: true })
 
     case RewardTypes.REDEEM_ETHEREUM:
       return state.merge({ redeemEthereumFetching: true })
     case RewardTypes.REDEEM_ETHEREUM_SUCCESS:
-      return state.merge({ redeemEthereumFetching: false, redeemedEthereum: ethereum, redeemEthereumError: false })
+      return state.merge({ redeemEthereumFetching: false, redeemedEthereum: action.ethereum, redeemEthereumError: false })
     case RewardTypes.REDEEM_ETHEREUM_FAILURE:
       return state.merge({ redeemEthereumFetching: false, redeemEthereumError: true })
     default: return state
