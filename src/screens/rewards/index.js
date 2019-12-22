@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, Dimensions, TextInput } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, Dimensions, TextInput, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -18,7 +18,7 @@ import BronzeSvg from '../../images/bronze.svg';
 import { Colors, Fonts } from '../../utils/Themes';
 import { RewardActions, UserActions } from '../../actions';
 import ModalConfirm from '../../components/modal-confirm';
-
+import ModalPointDetail from '../../components/modal-point-detail';
 class Rewards extends Component {
   modalVoucher = React.createRef();
   modalEthereum = React.createRef();
@@ -30,7 +30,9 @@ class Rewards extends Component {
       showConfirmEthereum: false,
       selectedPlan: {},
       showResult: false,
-      address: ''
+      address: '',
+      showDetail: false,
+      selectedItem: {}
     };
 
     this.handleSelectReward = this.handleSelectReward.bind(this);
@@ -41,13 +43,20 @@ class Rewards extends Component {
     this.requestRedeemEthereum = this.requestRedeemEthereum.bind(this);
     this.handleRedeemVoucher = this.handleRedeemVoucher.bind(this);
     this.handleRedeemEthereum = this.handleRedeemEthereum.bind(this);
+    this.handleShowDetail = this.handleShowDetail.bind(this);
+    this._renderItem = this._renderItem.bind(this);
+    this.loadData = this.loadData.bind(this);
   }
 
-  componentDidMount() {
+  loadData() {
     this.props.getVouchers();
     this.props.getEthereums();
     this.props.getPoint();
     this.props.getPointHistories();
+  }
+
+  componentDidMount() {
+    this.loadData();
   }
 
   componentDidUpdate(prevProps) {
@@ -193,6 +202,10 @@ class Rewards extends Component {
     // this.setState({ showConfirmEthereum: false })
   }
 
+  handleShowDetail(selectedItem) {
+    this.setState({ selectedItem, showDetail: true })
+  }
+
   _renderItem({ item }) {
     let background = '';
     let name = '';
@@ -215,7 +228,7 @@ class Rewards extends Component {
 
     const pointStyle = [styles.descriptionType, { textAlign: 'right', color: colorPoint }];
     return (
-      <View style={styles.itemContainer}>
+      <TouchableOpacity style={styles.itemContainer} onPress={() => this.handleShowDetail(item)} disabled={item.descriptionType === 'Donate Blood'}>
         <View style={styles.left}>
           <View style={[styles.iconContainer, { backgroundColor: background }]}>
             <Icon name={name} size={15} color={Colors.white} />
@@ -229,7 +242,7 @@ class Rewards extends Component {
           <Text style={pointStyle}>{item.updatePointType === 0 ? `+ ` : `- `}{item.amount}</Text>
           <Text style={[styles.time, { textAlign: 'right' }]}>{item.ethAmount || item.rewardName || ''}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -239,9 +252,14 @@ class Rewards extends Component {
 
   render() {
     const modalHeight = Dimensions.get('window').height * 0.55;
+    console.log('item', this.state.selectedItem)
     return (
       <React.Fragment>
-        <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={this.props.historiesFetching} onRefresh={this.loadData} />}
+        >
           <View style={styles.header}>
             {/* <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: 'white' }}></View> */}
             <Text style={styles.point}>{`${this.props.point} point`} </Text>
@@ -310,6 +328,16 @@ class Rewards extends Component {
             ethereum={this.props.redeemedEthereum && this.props.redeemedEthereum.transactionId}
             showResult={this.state.showResult}
           />
+          <ModalPointDetail
+            isVisible={this.state.showDetail}
+            title={this.state.selectedItem.descriptionType}
+            rewardName={this.state.selectedItem.rewardName}
+            code={this.state.selectedItem.code}
+            address={this.state.selectedItem.ethAddress}
+            amount={this.state.selectedItem.ethAmount}
+            transactionId={this.state.selectedItem.transactionId}
+            onClose={() => this.setState({ showDetail: false })}
+          />
         </ScrollView>
         <Modalize
           ref={this.modalVoucher}
@@ -345,6 +373,7 @@ const mapStateToProps = state => ({
   redeemEthereumFetching: state.reward.redeemEthereumFetching,
   redeemedVoucher: state.reward.redeemedVoucher,
   redeemedEthereum: state.reward.redeemedEthereum,
+  historiesFetching: state.user.historiesFetching
 });
 
 const mapDispatchToProps = dispatch => ({

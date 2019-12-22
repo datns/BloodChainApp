@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, SafeAreaView, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, Image, SafeAreaView, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -36,6 +36,8 @@ class Profile extends Component {
       isVisible: false,
       showQRCode: false,
       showConfirm: false,
+      page: 1,
+      selectedPackId: ''
     };
 
     this.renderInfo = this.renderInfo.bind(this);
@@ -44,10 +46,12 @@ class Profile extends Component {
     this.renderQRCode = this.renderQRCode.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleBloodPack = this.handleBloodPack.bind(this);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
+    this.handleRefresh = this.handleRefresh.bind(this);
   }
 
   componentDidMount() {
-    this.props.getBloodPacks(1)
+    this.props.getBloodPacks(this.state.page)
   }
 
   async handleLogout() {
@@ -126,7 +130,7 @@ class Profile extends Component {
                 onEventPress={this.onEventPress}
                 detailContainerStyle={styles.detailContainerStyle}
                 options={{
-                  showsVerticalScrollIndicator: false
+                  showsVerticalScrollIndicator: false,
                 }}
               />
             )}
@@ -150,6 +154,20 @@ class Profile extends Component {
           <QRCode value={this.props.user._id} size={200} />
         </View>
       </Modal>
+    )
+  }
+
+  handleLoadMore() {
+    this.setState((prevState) => ({
+      page: prevState.page + 1
+    }), () => this.props.getBloodPacks(this.state.page))
+  }
+
+  handleRefresh() {
+    this.setState((prevState) => ({
+      page: 1
+    }),
+      () => this.props.getBloodPacks(this.state.page)
     )
   }
 
@@ -205,6 +223,10 @@ class Profile extends Component {
             renderItem={this._renderItem}
             contentContainerStyle={{ paddingHorizontal: 20 }}
             ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No data</Text>}
+            onEndReached={this.handleLoadMore}
+            onEndReachedThreshold={0.01}
+            refreshing={this.props.fetching}
+            onRefresh={this.handleRefresh}
           />
         </View>
         {this.renderModal()}
@@ -224,6 +246,7 @@ class Profile extends Component {
 const mapStateToProps = state => ({
   user: state.user.user,
   packs: state.bloodPack.bloodPacks,
+  fetching: state.bloodPack.fetching,
   total: state.bloodPack.total,
   histories: state.bloodPack.transferHistories,
   transferFetching: state.bloodPack.transferFetching
