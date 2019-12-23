@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
@@ -9,6 +9,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler'
 
 import { connect } from 'react-redux'
 import { LocationActions } from '../../actions';
+import { Colors } from '../../utils/Themes';
 
 class ListLocation extends PureComponent {
   constructor(props) {
@@ -62,7 +63,9 @@ class ListLocation extends PureComponent {
     return (
       <React.Fragment>
         <TouchableOpacity style={styles.footer} onPress={this.props.loadMore}>
-          <Text style={styles.textLoadMore}>Load more</Text>
+          {this.props.loading ? <ActivityIndicator size={'small'} color={Colors.easternBlue} /> :
+            <Text style={styles.textLoadMore}>Load more</Text>
+          }
         </TouchableOpacity>
       </React.Fragment>
     )

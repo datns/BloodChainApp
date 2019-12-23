@@ -241,34 +241,40 @@ class Locations extends Component {
     let searchLocation = [];
     let isSearching = this.state.textSearch !== '';
     let title = '';
+    let loading = null;
     switch (type) {
       case 1: {
         listLocation = this.props.camps;
         searchLocation = this.props.searchCamps;
         title = 'Blood camps';
+        loading = this.props.fetchingCamps
         break;
       }
       case 2: {
         listLocation = this.props.tests;
         searchLocation = this.props.searchTests;
         title = 'Test centers';
+        loading = this.props.fetchingTests
         break;
       }
       case 3: {
         listLocation = this.props.separations;
         searchLocation = this.props.searchSeparations;
         title = 'Separation centers';
+        loading = this.props.fetchingSeparations
         break;
       }
       case 4: {
         listLocation = this.props.banks;
         searchLocation = this.props.searchBanks;
         title = 'Blood banks';
+        loading = this.props.fetchingBanks
         break;
       }
       case 5: {
         listLocation = this.props.hospitals;
         searchLocation = this.props.searchHospitals;
+        loading = this.props.fetchingHospitals
         title = 'Hospitals';
         break;
       }
@@ -278,6 +284,7 @@ class Locations extends Component {
         data={!isSearching ? listLocation : searchLocation}
         title={title}
         loadMore={!isSearching ? this.loadMore : null}
+        loading={loading}
         goBack={this.handleBack} />
     )
   }
@@ -412,7 +419,12 @@ const mapStateToProps = state => ({
   searchBanks: state.bloodBank.searchBloodBanks,
   searchTests: state.bloodTest.searchBloodTests,
   searchSeparations: state.bloodSeparation.searchBloodSeparations,
-  searchHospitals: state.hospital.searchHospitals
+  searchHospitals: state.hospital.searchHospitals,
+  fetchingCamps: state.bloodCamp.fetching,
+  fetchingBanks: state.bloodBank.fetching,
+  fetchingSeparations: state.bloodSeparation.fetching,
+  fetchingTests: state.bloodTest.fetching,
+  fetchingHospitals: state.hospital.fetching,
 })
 
 const mapDispatchToProps = dispatch => ({

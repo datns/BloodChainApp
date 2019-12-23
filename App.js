@@ -15,10 +15,12 @@ import {
 import AppNavigator from './src/navigators/AppNavigator';
 import { Provider } from 'react-redux';
 import store from './src/store';
+import { Colors } from './src/utils/Themes';
 
 const App = () => {
   return (
     <Provider store={store}>
+      <StatusBar backgroundColor={Colors.coralRed} barStyle="light-content" animated />
       <AppNavigator />
     </Provider>
   );

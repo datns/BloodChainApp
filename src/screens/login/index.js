@@ -10,6 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import styles from './styles';
 import { Colors } from '../../utils/Themes';
+import SplashScreen from 'react-native-splash-screen';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -20,6 +21,10 @@ class LoginScreen extends Component {
     };
 
     this.handleLogin = this.handleLogin.bind(this)
+  }
+
+  componentDidMount() {
+    SplashScreen.hide();
   }
 
   handleLogin() {

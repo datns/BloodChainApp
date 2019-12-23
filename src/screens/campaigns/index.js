@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Modalize from 'react-native-modalize'
 import Icon from 'react-native-vector-icons/Feather'
 import _ from 'lodash'
+import SplashScreen from 'react-native-splash-screen';
 
 import {
   CampaignActions,
@@ -36,6 +37,7 @@ class CampaignsScreen extends Component {
   }
 
   componentDidMount() {
+    SplashScreen.hide();
     this.props.getCampaigns(this.state.page);
   }
 
