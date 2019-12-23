@@ -112,7 +112,7 @@ class Rewards extends Component {
   }
 
   renderVoucherCard({ item }) {
-    const isUnavailable = this.props.point < item.point;
+    const isUnavailable = this.props.point < item.point || item.quantity <= 0;
     const backgroundButton = { backgroundColor: isUnavailable ? Colors.darkGray : Colors.dodgerBlue }
     return (
       <View style={styles.voucherCardContainer}>
