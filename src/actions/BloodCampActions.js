@@ -12,4 +12,8 @@ const getBloodCampsByName = (name) => ({
   type: BloodCampTypes.GET_BLOOD_CAMPS_BY_NAME, name
 })
 
-export { getBloodCamps, getNearbyBloodCamps, getBloodCampsByName }
+const getBloodCampDetail = (id) => ({
+  type: BloodCampTypes.GET_BLOOD_CAMP_DETAIL, id
+})
+
+export { getBloodCamps, getNearbyBloodCamps, getBloodCampsByName, getBloodCampDetail }

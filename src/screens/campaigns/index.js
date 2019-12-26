@@ -8,7 +8,7 @@ import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen';
 
 import {
-  CampaignActions,
+  CampaignActions, BloodPackActions, BloodCampActions,
 } from '../../actions';
 
 import moment from 'moment';
@@ -62,7 +62,7 @@ class CampaignsScreen extends Component {
   }
 
   handleDetail(item) {
-    this.setState({ item });
+    this.setState({ item }, () => this.props.getBloodCampDetail(item.bloodCamp._id));
     if (this.modal.current) {
       this.modal.current.open();
     }
@@ -75,7 +75,7 @@ class CampaignsScreen extends Component {
   }
 
   onPressLocation() {
-    this.props.navigation.navigate('Details', { location: this.state.item.bloodCamp });
+    this.props.navigation.navigate('Details', { location: this.props.detail });
   }
 
   onChangeText(searchText) {
@@ -153,12 +153,14 @@ class CampaignsScreen extends Component {
 const mapStateToProps = state => ({
   campaigns: state.campaign.campaigns,
   searchCampaigns: state.campaign.searchCampaigns,
-  fetching: state.campaign.fetching
+  fetching: state.campaign.fetching,
+  detail: state.bloodCamp.detail
 })
 
 const mapDispatchToProps = dispatch => ({
   getCampaigns: (page) => dispatch(CampaignActions.getCampaigns(page)),
-  getCampaignsByName: (name) => dispatch(CampaignActions.getCampaignsByName(name))
+  getCampaignsByName: (name) => dispatch(CampaignActions.getCampaignsByName(name)),
+  getBloodCampDetail: (id) => dispatch(BloodCampActions.getBloodCampDetail(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignsScreen);

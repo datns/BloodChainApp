@@ -10,7 +10,10 @@ const initialState = Immutable({
   nearbyError: false,
   searchBloodCamps: [],
   searchFetching: false,
-  searchError: false
+  searchError: false,
+  detail: {},
+  detailFetching: false,
+  detailError: false
 })
 
 export default (state = initialState, action) => {
@@ -35,6 +38,13 @@ export default (state = initialState, action) => {
       return state.merge({ searchFetching: false, searchBloodCamps: action.searchBloodCamps, searchError: false })
     case BloodCampTypes.GET_BLOOD_CAMPS_BY_NAME_FAILURE:
       return state.merge({ searchFetching: false, searchError: true })
+
+    case BloodCampTypes.GET_BLOOD_CAMP_DETAIL:
+      return state.merge({ detailFetching: true })
+    case BloodCampTypes.GET_BLOOD_CAMP_DETAIL_SUCCESS:
+      return state.merge({ detailFetching: false, detail: action.detail, detailError: false })
+    case BloodCampTypes.GET_BLOOD_CAMP_DETAIL_FAILURE:
+      return state.merge({ detailFetching: false, detailError: true })
     default: return state
   }
 }

@@ -55,3 +55,15 @@ export function* getBloodCampsByName(api, action) {
     yield put({ type: BloodCampTypes.GET_BLOOD_CAMPS_BY_NAME_FAILURE })
   }
 }
+
+export function* getBloodCampDetail(api, action) {
+  try {
+    const response = yield call(api.getBloodCampDetail, action.id)
+    const detail = response.data
+    yield put({ type: BloodCampTypes.GET_BLOOD_CAMP_DETAIL_SUCCESS, detail })
+  }
+  catch (err) {
+    console.log(err)
+    yield put({ type: BloodCampTypes.GET_BLOOD_CAMP_DETAIL_FAILURE })
+  }
+}

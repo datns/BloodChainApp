@@ -43,6 +43,8 @@ const create = () => {
 
   const redeemEthereum = (planName, address) => api.post('rewards/ethereum/redeem', { planName, address })
 
+  const getBloodCampDetail = (id) => api.get(`blood-camps/${id}`);
+
   return {
     login,
     setAccessToken,
@@ -60,7 +62,8 @@ const create = () => {
     getUserPoint,
     getPointHistories,
     redeemVoucher,
-    redeemEthereum
+    redeemEthereum,
+    getBloodCampDetail,
   }
 }
 

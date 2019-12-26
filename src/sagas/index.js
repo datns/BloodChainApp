@@ -13,7 +13,7 @@ import {
 
 import { login, relogin } from './AuthSaga';
 import { getCampaigns, getCampaignsByName } from './CampaignSaga';
-import { getBloodCamps, getNearbyBloodCamps, getBloodCampsByName } from './BloodCampSaga';
+import { getBloodCamps, getNearbyBloodCamps, getBloodCampsByName, getBloodCampDetail } from './BloodCampSaga';
 import { getBloodBanks, getNearbyBloodBanks, getBloodBanksByName } from './BloodBankSaga';
 import { getBloodTests, getNearbyBloodTests, getBloodTestsByName } from './BloodTestSaga';
 import { getBloodSeparations, getNearbyBloodSeparations, getBloodSeparationsByName } from './BloodSeparationSaga';
@@ -38,6 +38,7 @@ export default function* root() {
     takeLatest(BloodCampTypes.GET_BLOOD_CAMPS, getBloodCamps, api),
     takeLatest(BloodCampTypes.GET_NEARBY_BLOOD_CAMPS, getNearbyBloodCamps, api),
     takeLatest(BloodCampTypes.GET_BLOOD_CAMPS_BY_NAME, getBloodCampsByName, api),
+    takeLatest(BloodCampTypes.GET_BLOOD_CAMP_DETAIL, getBloodCampDetail, api),
 
     takeLatest(BloodBankTypes.GET_BLOOD_BANKS, getBloodBanks, api),
     takeLatest(BloodBankTypes.GET_NEARBY_BLOOD_BANKS, getNearbyBloodBanks, api),
