@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { connect } from 'react-redux'
-import { AuthActions } from '../../actions';
+import { AuthActions, UserActions } from '../../actions';
 
 class AuthLoading extends Component {
   constructor(props) {
@@ -14,11 +14,11 @@ class AuthLoading extends Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
-    console.log('userToken', userToken)
-
+    const language = await AsyncStorage.getItem('language');
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     // this.props.navigation.navigate(userToken ? 'HomeStack' : 'AuthStack');
+    this.props.setLanguage(language);
     if (userToken) {
       this.props.relogin(userToken)
       this.props.navigation.navigate('HomeStack')
@@ -41,10 +41,11 @@ class AuthLoading extends Component {
 }
 
 const mapStateToProps = state => ({
-
+  language: state.user.language
 })
 const mapDispatchToProps = dispatch => ({
-  relogin: (accessToken) => dispatch(AuthActions.relogin(accessToken))
+  relogin: (accessToken) => dispatch(AuthActions.relogin(accessToken)),
+  setLanguage: language => dispatch(UserActions.setLanguage(language))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthLoading);

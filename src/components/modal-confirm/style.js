@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 35
   },
   button: {
-    width: '35%',
+    width: '40%',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 5,
+    paddingHorizontal: 5,
     backgroundColor: Colors.coralRed
   },
   buttonText: {

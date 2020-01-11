@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white
   },
   actionButtonContainer: {
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: '100%',
     marginTop: 10,
@@ -189,6 +189,25 @@ const styles = StyleSheet.create({
     borderColor: Colors.foggyGrey,
     borderWidth: 1,
     borderRadius: 20,
+  },
+  languageContainer: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: 250,
+    height: 150,
+    backgroundColor: Colors.white
+  },
+  languageTitle: {
+    fontFamily: Fonts.bold,
+    fontSize: FontSizes.h2,
+    color: Colors.coralRed,
+    textAlign: 'center'
+  },
+  language: {
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.title,
+    color: Colors.black,
+    textAlign: 'center'
   }
 })
 

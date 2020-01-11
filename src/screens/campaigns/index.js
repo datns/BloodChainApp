@@ -6,6 +6,7 @@ import Modalize from 'react-native-modalize'
 import Icon from 'react-native-vector-icons/Feather'
 import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen';
+import I18n from '../../utils/I18n';
 
 import {
   CampaignActions, BloodPackActions, BloodCampActions,
@@ -47,15 +48,15 @@ class CampaignsScreen extends Component {
     const isInProgress = moment().isBetween(startDate, endDate)
     return (
       <View style={styles.item}>
-        <Text style={styles.title}>{'Name'}</Text>
+        <Text style={styles.title}>{I18n.t('campaign.name')}</Text>
         <Text style={styles.content}>{name}</Text>
-        <Text style={styles.title}>{'Location'}</Text>
+        <Text style={styles.title}>{I18n.t('campaign.location')}</Text>
         <Text style={styles.content}>{bloodCamp.name}</Text>
-        <Text style={styles.title}>{'Time'}</Text>
+        <Text style={styles.title}>{I18n.t('campaign.time')}</Text>
         <Text style={styles.content}>{`${moment(startDate).format('DD.MM.YYYY')} - ${moment(endDate).format('DD.MM.YYYY')}`}</Text>
-        <Text style={styles.statusText}>{isExpired ? 'Finished' : isInProgress ? 'Happenning' : 'Upcoming'}</Text>
+        <Text style={styles.statusText}>{isExpired ? I18n.t('campaign.finished') : isInProgress ? I18n.t('campaign.happening') : I18n.t('campaign.upcoming')}</Text>
         <TouchableOpacity onPress={() => this.handleDetail(item)} style={styles.detailButton}>
-          <Text style={styles.detailText}>{'DETAIL'}</Text>
+          <Text style={styles.detailText}>{I18n.t('campaign.detail')}</Text>
         </TouchableOpacity>
       </View>
     )
@@ -108,7 +109,7 @@ class CampaignsScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>CAMPAIGN</Text>
+          <Text style={styles.headerText}>{I18n.t('campaign.campaign')}</Text>
           <View style={styles.inputView}>
             <TextInput
               value={this.state.searchText}
@@ -116,7 +117,7 @@ class CampaignsScreen extends Component {
               style={styles.searchInput}
               autoCompleteType={'name'}
               autoCapitalize={'none'}
-              placeholder={'Search campaign\'s name'}
+              placeholder={I18n.t('campaign.search')}
               placeholderTextColor={Colors.foggyGrey}
             />
             <View style={styles.iconView}>
@@ -154,7 +155,8 @@ const mapStateToProps = state => ({
   campaigns: state.campaign.campaigns,
   searchCampaigns: state.campaign.searchCampaigns,
   fetching: state.campaign.fetching,
-  detail: state.bloodCamp.detail
+  detail: state.bloodCamp.detail,
+  language: state.user.language,
 })
 
 const mapDispatchToProps = dispatch => ({

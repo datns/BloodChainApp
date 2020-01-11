@@ -2874,6 +2874,10 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
+i18n-js@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.5.1.tgz#9787450894059bec1af791123231e59898eb97c1"
+
 iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -4983,6 +4987,10 @@ react-native-safe-area-view@^0.14.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.23.tgz#25d7ea4d11bda4fcde2d1da7ae50271c6aa636e0"
   dependencies:
     debounce "^1.2.0"
+
+react-native-simple-radio-button@^2.7.4:
+  version "2.7.4"
+  resolved "https://registry.yarnpkg.com/react-native-simple-radio-button/-/react-native-simple-radio-button-2.7.4.tgz#86e2dbe8af9e6bf60eee088f60466f7a975e7758"
 
 react-native-snap-carousel@^3.8.1:
   version "3.8.1"

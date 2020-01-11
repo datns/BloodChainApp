@@ -1,6 +1,9 @@
 import { UserTypes } from '../types';
 
-import { put, call } from 'redux-saga/effects'
+import { put, call } from 'redux-saga/effects';
+
+import I18n from "i18n-js";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export function* getUserInfo(api) {
   try {
@@ -32,5 +35,14 @@ export function* getPointHistories(api) {
   catch (err) {
     console.log(err);
     yield put({ type: UserTypes.GET_POINTS_HISTORIES_FAILURE })
+  }
+}
+
+export function* setLanguage(api, action) {
+  try {
+    I18n.locale = action.language;
+    yield call(AsyncStorage.setItem('language', action.language))
+  } catch (err) {
+    console.log(err);
   }
 }

@@ -4,6 +4,7 @@ import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel'
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
+import I18n from '../../utils/I18n';
 
 import styles, { sliderWidth, itemWidth } from './styles';
 import { Colors } from '../../utils/Themes';
@@ -102,9 +103,9 @@ class DetailsScreen extends PureComponent {
           inactiveDotScale={0.6}
         />
         <View style={styles.containerInfo} >
-          {this.renderCardInfo('home', 'Address', location.address)}
-          {this.renderCardInfo('phone', 'Phone', location.phone)}
-          {this.renderCardInfo('mail', 'Email', location.email)}
+          {this.renderCardInfo('home', I18n.t('detail.address'), location.address)}
+          {this.renderCardInfo('phone', I18n.t('detail.phone'), location.phone)}
+          {this.renderCardInfo('mail', I18n.t('detail.email'), location.email)}
           {/* {this.renderCardInfo('activity', 'CreatedAt', moment(location.createdAt).format('MMMM Do YYYY'))} */}
         </View>
       </View>

@@ -1,7 +1,8 @@
 import React, { Component, } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 
-import Modal from 'react-native-modal'
+import Modal from 'react-native-modal';
+import I18n from '../../utils/I18n';
 
 import styles from './styles'
 
@@ -45,16 +46,16 @@ class ModalPointDetail extends Component {
           <Text style={styles.title}>{title}</Text>
           {/* <Text style={styles.desc}>{description}</Text> */}
           {rewardName &&
-            this.renderInfo('Reward name: ', rewardName)
+            this.renderInfo(I18n.t('modalPoint.name'), rewardName)
           }
           {code &&
-            this.renderInfo('CODE: ', code)
+            this.renderInfo(I18n.t('modalPoint.code'), code)
           }
           {address && <React.Fragment>
-            <Text style={styles.field}>{'Address: '}</Text>
+            <Text style={styles.field}>{I18n.t('modalPoint.address')}</Text>
             <Text style={styles.desc}>{address}</Text>
           </React.Fragment>}
-          {amount && this.renderInfo('Amount: ', amount)}
+          {amount && this.renderInfo(I18n.t('modalPoint.amount'), amount)}
           {transactionId && <React.Fragment>
             <Text style={styles.field}>{'Transaction ID: '}</Text>
             <Text style={styles.desc}>{transactionId}</Text>

@@ -35,6 +35,7 @@ import BloodCampSvg from '../../images/048-blood-transfusion.svg';
 import HospitalSvg from '../../images/004-hospital.svg';
 import TestCenterSvg from '../../images/010-microscope.svg';
 import SeparationCenterSvg from '../../images/040-erythrocytes.svg';
+import I18n from '../../utils/I18n';
 
 const { height } = Dimensions.get('window')
 
@@ -42,32 +43,32 @@ const { height } = Dimensions.get('window')
 const CATEGORIES = [
   {
     id: 1,
-    name: 'Blood camp',
+    name: I18n.t('location.camp'),
     image:
       <BloodCampSvg width={50} height={50} />
   },
   {
     id: 2,
-    name: 'Test center',
+    name: I18n.t('location.test'),
     image:
       <TestCenterSvg width={50} height={50} />
   },
   {
     id: 3,
-    name: 'Separation center',
+    name: I18n.t('location.separation'),
 
     image:
       <SeparationCenterSvg width={50} height={50} />
   },
   {
     id: 4,
-    name: 'Blood bank',
+    name: I18n.t('location.bank'),
     image:
       <BloodBankSvg width={50} height={50} />
   },
   {
     id: 5,
-    name: 'Hospital',
+    name: I18n.t('location.hospital'),
     image:
       <HospitalSvg width={50} height={50} />
   },
@@ -246,28 +247,28 @@ class Locations extends Component {
       case 1: {
         listLocation = this.props.camps;
         searchLocation = this.props.searchCamps;
-        title = 'Blood camps';
+        title = I18n.t('location.camp');
         loading = this.props.fetchingCamps
         break;
       }
       case 2: {
         listLocation = this.props.tests;
         searchLocation = this.props.searchTests;
-        title = 'Test centers';
+        title = I18n.t('location.test');
         loading = this.props.fetchingTests
         break;
       }
       case 3: {
         listLocation = this.props.separations;
         searchLocation = this.props.searchSeparations;
-        title = 'Separation centers';
+        title = I18n.t('location.separation');
         loading = this.props.fetchingSeparations
         break;
       }
       case 4: {
         listLocation = this.props.banks;
         searchLocation = this.props.searchBanks;
-        title = 'Blood banks';
+        title = I18n.t('location.bank');
         loading = this.props.fetchingBanks
         break;
       }
@@ -275,7 +276,7 @@ class Locations extends Component {
         listLocation = this.props.hospitals;
         searchLocation = this.props.searchHospitals;
         loading = this.props.fetchingHospitals
-        title = 'Hospitals';
+        title = I18n.t('location.hospital');
         break;
       }
     }
@@ -310,7 +311,7 @@ class Locations extends Component {
     return (
       <React.Fragment>
         <View style={styles.contentModal}>
-          <Text style={styles.headingModal}>{'Where to ?'}</Text>
+          <Text style={styles.headingModal}>{I18n.t('location.title')}</Text>
           <View style={styles.wrapInput}>
             <FeatherIcons name={'search'} size={20} />
             <TextInput

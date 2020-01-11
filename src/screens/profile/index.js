@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, SafeAreaView, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, Text, Image, SafeAreaView, FlatList, TouchableOpacity, ActivityIndicator, Picker } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import RadioForm from 'react-native-simple-radio-button';
 
 
 import FeatherIcon from 'react-native-vector-icons/Feather'
@@ -26,6 +27,7 @@ import ModalConfirm from '../../components/modal-confirm';
 
 import styles from './styles';
 import { Colors } from '../../utils/Themes';
+import I18n from '../../utils/I18n';
 
 import { generateInfoPack } from '../../utils/Helpers';
 
@@ -36,6 +38,7 @@ class Profile extends Component {
       isVisible: false,
       showQRCode: false,
       showConfirm: false,
+      showLanguage: false,
       page: 1,
       selectedPackId: ''
     };
@@ -48,6 +51,7 @@ class Profile extends Component {
     this.handleBloodPack = this.handleBloodPack.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
+    this.renderLanguageModal = this.renderLanguageModal.bind(this);
   }
 
   componentDidMount() {
@@ -115,7 +119,7 @@ class Profile extends Component {
       >
         {this.props.transferFetching ? <ActivityIndicator color={Colors.easternBlue} size={'large'} /> : (
           <View style={styles.timelineStyle}>
-            {this.props.histories.length === 0 ? (<Text style={{ textAlign: 'center' }}>No data</Text>) : (
+            {this.props.histories.length === 0 ? (<Text style={{ textAlign: 'center' }}>{I18n.t('profile.noData')}</Text>) : (
               <Timeline
                 // style={styles.timelineStyle}
                 data={this.props.histories}
@@ -152,6 +156,38 @@ class Profile extends Component {
         animationOut={'fadeOut'}>
         <View style={styles.qrCodeContainer}>
           <QRCode value={this.props.user._id} size={200} />
+        </View>
+      </Modal>
+    )
+  }
+
+  renderLanguageModal() {
+    const radio_props = [
+      { label: 'Tiếng Việt', value: 'vi' },
+      { label: 'English', value: 'en' }
+    ];
+    const inintalIndex = this.props.language === 'vi' ? 0 : 1;
+    return (
+      <Modal
+        isVisible={this.state.showLanguage}
+        onBackButtonPress={() => this.setState({ showLanguage: false })}
+        onBackdropPress={() => this.setState({ showLanguage: false })}
+        style={{ justifyContent: 'center', alignItems: 'center' }}
+        backdropTransitionOutTiming={0}
+        animationIn={'fadeIn'}
+        animationOut={'fadeOut'}>
+        <View style={styles.languageContainer}>
+          <Text style={styles.languageTitle}>{I18n.t('profile.chooseLanguage')}</Text>
+          <RadioForm
+            radio_props={radio_props}
+            initial={inintalIndex}
+            formHorizontal={false}
+            labelHorizontal={true}
+            buttonColor={'#2196f3'}
+            animation={true}
+            onPress={(value) => this.props.setLanguage(value)}
+            labelStyle={styles.language}
+          />
         </View>
       </Modal>
     )
@@ -195,6 +231,9 @@ class Profile extends Component {
                 color={isMale ? Colors.dodgerBlue : Colors.strawberryPink} />
             </View>
             <View style={styles.actionButtonContainer}>
+              <TouchableOpacity onPress={() => this.setState({ showLanguage: true })}>
+                <FAIcon name={'language'} size={25} />
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => this.setState({ showQRCode: true })}>
                 <FAIcon name={'qrcode'} size={25} />
               </TouchableOpacity>
@@ -212,9 +251,9 @@ class Profile extends Component {
         </View>
         <View style={{ flex: 1.5 }}>
           <View style={styles.titleHistoryView}>
-            <Text style={styles.titleHistory}>{`Donation History`}</Text>
+            <Text style={styles.titleHistory}>{I18n.t('profile.history')}</Text>
             {/* <View style={styles.timeView}> */}
-            <Text style={styles.timesText}>{`${this.props.total} times`}</Text>
+            <Text style={styles.timesText}>{`${this.props.total} ${I18n.t('profile.times')}`}</Text>
             {/* </View> */}
           </View>
           <FlatList
@@ -222,7 +261,7 @@ class Profile extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={this._renderItem}
             contentContainerStyle={{ paddingHorizontal: 20 }}
-            ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No data</Text>}
+            ListEmptyComponent={<Text style={{ textAlign: 'center' }}>{I18n.t('profile.noData')}</Text>}
             onEndReached={this.handleLoadMore}
             onEndReachedThreshold={0.01}
             refreshing={this.props.fetching}
@@ -231,10 +270,11 @@ class Profile extends Component {
         </View>
         {this.renderModal()}
         {this.renderQRCode()}
+        {this.renderLanguageModal()}
         <ModalConfirm
           isVisible={this.state.showConfirm}
-          title={'LOGOUT'}
-          description={'Are you sure to logout?'}
+          title={I18n.t('profile.logout')}
+          description={I18n.t('profile.logoutText')}
           onYesPress={this.handleLogout}
           onNoPress={() => this.setState({ showConfirm: false })}
         />
@@ -249,12 +289,14 @@ const mapStateToProps = state => ({
   fetching: state.bloodPack.fetching,
   total: state.bloodPack.total,
   histories: state.bloodPack.transferHistories,
-  transferFetching: state.bloodPack.transferFetching
+  transferFetching: state.bloodPack.transferFetching,
+  language: state.user.language
 })
 
 const mapDispatchToProps = dispatch => ({
   getUserInfo: () => dispatch(UserActions.getUserInfo()),
   getBloodPacks: page => dispatch(BloodPackActions.getBloodPacks(page)),
-  getHistories: id => dispatch(BloodPackActions.getTransferHistories(id))
+  getHistories: id => dispatch(BloodPackActions.getTransferHistories(id)),
+  setLanguage: language => dispatch(UserActions.setLanguage(language))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

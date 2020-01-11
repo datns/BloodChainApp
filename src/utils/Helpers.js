@@ -1,4 +1,5 @@
-import moment from 'moment'
+import moment from 'moment';
+import I18n from '../utils/I18n';
 
 function getIconByType(type) {
   let icon = '';
@@ -46,8 +47,8 @@ export function convertTranferHistories(histories) {
 export function generateInfoPack(item) {
   const time = moment(item.createdAt).format('lll');
   const bloodType = item.bloodType ? ` • ${item.bloodType}` : '';
-  const tested = item.tested ? `• Test: ${item.testPassed ? 'passed' : 'failed'}` : '';
-  const separated = item.separated ? '• Separated' : '';
+  const tested = item.tested ? `• ${I18n.t('profile.test')} ${item.testPassed ? I18n.t('profile.passed') : I18n.t('profile.failed')}` : '';
+  const separated = item.separated ? I18n.t('profile.separated') : '';
 
   return `${time} ${bloodType} ${tested} ${separated} `
 }
@@ -58,11 +59,11 @@ function generateDescByType(data) {
   if (data.historyType == 4) {
     const patientName = data.toName.slice(0, data.toName.indexOf(';;;')),
       patientPhone = data.toName.slice(-10);
-    description = `Patient: ${patientName}\nPhone: ${patientPhone}\n${data.description}`;
+    description = `${I18n.t('profile.patient')} ${patientName}\n${I18n.t('profile.patient')} ${patientPhone}\n${data.description}`;
   }
   else if (data.historyType == 2)
-    description = `Your blood pack has been disposed.\n${data.description}`;
+    description = `${I18n.t('profile.disposed')}\n${data.description}`;
   else
-    description = `TO: ${data.toName}\n${data.description}`;
+    description = `${I18n.t('profile.to')} ${data.toName}\n${data.description}`;
   return description;
 }

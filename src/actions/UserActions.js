@@ -12,4 +12,8 @@ const getPointHistories = () => ({
   type: UserTypes.GET_POINTS_HISTORIES
 })
 
-export { getUserInfo, getUserPoint, getPointHistories }
+const setLanguage = language => ({
+  type: UserTypes.SET_LANGUAGE, language
+})
+
+export { getUserInfo, getUserPoint, getPointHistories, setLanguage }

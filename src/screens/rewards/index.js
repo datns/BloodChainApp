@@ -19,6 +19,7 @@ import { Colors, Fonts } from '../../utils/Themes';
 import { RewardActions, UserActions } from '../../actions';
 import ModalConfirm from '../../components/modal-confirm';
 import ModalPointDetail from '../../components/modal-point-detail';
+import I18n from '../../utils/I18n';
 class Rewards extends Component {
   modalVoucher = React.createRef();
   modalEthereum = React.createRef();
@@ -68,7 +69,7 @@ class Rewards extends Component {
   renderHeaderReward() {
     return (
       <View style={styles.headerReward}>
-        <Text style={styles.headerRewardText}>Choose reward you want</Text>
+        <Text style={styles.headerRewardText}>{I18n.t('reward.header')}</Text>
       </View>
     )
   }
@@ -96,7 +97,7 @@ class Rewards extends Component {
           value={this.state.address}
           onChangeText={text => this.setState({ address: text })}
           style={styles.addressInput}
-          placeholder={'Input address before redeem'}
+          placeholder={I18n.t('reward.ethereumHolder')}
         />
         <FlatList
           key={'ethereum'}
@@ -131,11 +132,11 @@ class Rewards extends Component {
             {item.name.toUpperCase()}
           </Text>
           <Text style={styles.voucherDesc}>{item.description}</Text>
-          <Text style={styles.voucherDesc}>{`Voucher cost `}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} POINTS`}</Text></Text>
+          <Text style={styles.voucherDesc}>{I18n.t('reward.voucherCost')}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} ${I18n.t('reward.points')}`}</Text></Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.voucherDesc}>Remain <Text style={styles.voucherQuantity}>{item.quantity}</Text> voucher(s)</Text>
+            <Text style={styles.voucherDesc}>{I18n.t('reward.remain')}<Text style={styles.voucherQuantity}>{item.quantity}</Text>{I18n.t('reward.voucher')}</Text>
             <TouchableOpacity style={[styles.redeemButton, backgroundButton]} onPress={() => this.requestRedeemVoucher(item)} disabled={isUnavailable}>
-              <Text style={styles.redeemText}>Redeem</Text>
+              <Text style={styles.redeemText}>{I18n.t('reward.redeem')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -163,9 +164,9 @@ class Rewards extends Component {
             {item.name.toUpperCase()}
           </Text>
           <Text style={styles.voucherDesc}><Text style={styles.voucherQuantity}>{item.eth}</Text> ETH</Text>
-          <Text style={styles.voucherDesc}>{`Plan cost `}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} POINTS`}</Text></Text>
+          <Text style={styles.voucherDesc}>{I18n.t('reward.planCost')}<Text style={{ fontFamily: Fonts.bold, color: 'red' }}>{`${item.point} ${I18n.t('reward.points')}`}</Text></Text>
           <TouchableOpacity style={[styles.redeemButton, backgroundButton]} disabled={isUnavailable} onPress={() => this.requestRedeemEthereum(item)}>
-            <Text style={styles.redeemText}>Redeem</Text>
+            <Text style={styles.redeemText}>{I18n.t('reward.redeem')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -210,20 +211,24 @@ class Rewards extends Component {
     let background = '';
     let name = '';
     let colorPoint = '';
+    let title = '';
     if (item.descriptionType === 'Donate Blood') {
       background = Colors.rose;
       name = 'burn';
-      colorPoint = 'green'
+      colorPoint = 'green';
+      title = I18n.t('reward.donateBlood')
     }
     else if (item.descriptionType === 'Redeem Voucher') {
       background = Colors.green;
       name = 'shopping-cart';
-      colorPoint = 'red'
+      colorPoint = 'red';
+      title = I18n.t('reward.redeemVoucher')
     }
     else if (item.descriptionType === 'Redeem Ethereum') {
       background = Colors.blue;
       name = 'ethereum';
-      colorPoint = 'red'
+      colorPoint = 'red';
+      title = I18n.t('reward.redeemEthereum')
     }
 
     const pointStyle = [styles.descriptionType, { textAlign: 'right', color: colorPoint }];
@@ -234,7 +239,7 @@ class Rewards extends Component {
             <Icon name={name} size={15} color={Colors.white} />
           </View>
           <View>
-            <Text style={styles.descriptionType}>{item.descriptionType}</Text>
+            <Text style={styles.descriptionType}>{title}</Text>
             <Text style={styles.time}>{moment(item.updatedAt).format('DD/MM/YYYY  h:mm:ss a')}</Text>
           </View>
         </View>
@@ -252,7 +257,7 @@ class Rewards extends Component {
 
   render() {
     const modalHeight = Dimensions.get('window').height * 0.55;
-    console.log('item', this.state.selectedItem)
+    const title = this.state.selectedItem.descriptionType === 'Donate Blood' ? I18n.t('reward.donateBlood') : this.state.selectedItem.descriptionType === 'Redeem Voucher' ? I18n.t('reward.redeemVoucher') : I18n.t('reward.redeemEthereum')
     return (
       <React.Fragment>
         <ScrollView
@@ -262,29 +267,29 @@ class Rewards extends Component {
         >
           <View style={styles.header}>
             {/* <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: 'white' }}></View> */}
-            <Text style={styles.point}>{`${this.props.point} point`} </Text>
+            <Text style={styles.point}>{`${this.props.point} ${(I18n.t('reward.points')).toLowerCase()}`} </Text>
           </View>
           <View style={styles.introCard}>
             <View>
-              <Text style={styles.action}>Donate your blood</Text>
+              <Text style={styles.action}>{I18n.t('reward.action1')}</Text>
               <View style={styles.divider} />
-              <Text style={styles.benefit}>Get reward points</Text>
+              <Text style={styles.benefit}>{I18n.t('reward.benefit1')}</Text>
             </View>
             <GetPointsSvg width={120} height={120} />
           </View>
           <View style={styles.introCard}>
             <SelectRewardsSvg width={120} height={120} />
             <View>
-              <Text style={[styles.action, { textAlign: 'right' }]}>Select rewards</Text>
+              <Text style={[styles.action, { textAlign: 'right' }]}>{I18n.t('reward.action2')}</Text>
               <View style={{ alignItems: 'flex-end' }}>
                 <View style={styles.divider} />
               </View>
-              <Text style={[styles.benefit, { textAlign: 'right' }]}>Vouchers or Ethereum</Text>
+              <Text style={[styles.benefit, { textAlign: 'right' }]}>{I18n.t('reward.benefit2')}</Text>
             </View>
           </View>
           <View style={styles.category}>
             <TouchableOpacity style={[styles.typeCard, { marginRight: 15 }]} onPress={this.handleSelectReward}>
-              <Text style={styles.type}>Vouchers</Text>
+              <Text style={styles.type}>{I18n.t('reward.vouchers')}</Text>
               <View style={{ alignItems: 'flex-end' }}>
                 <VouchersSvg height={80} width={80} />
               </View>
@@ -296,7 +301,7 @@ class Rewards extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <Text style={styles.titleHistory}>Point History</Text>
+          <Text style={styles.titleHistory}>{I18n.t('reward.history')}</Text>
           <FlatList
             data={this.props.pointHistories}
             renderItem={this._renderItem}
@@ -305,12 +310,12 @@ class Rewards extends Component {
             contentContainerStyle={{ paddingHorizontal: 10 }}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
-            ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No data</Text>}
+            ListEmptyComponent={<Text style={{ textAlign: 'center' }}>{I18n.t('profile.noData')}</Text>}
           />
           <ModalConfirm
             isVisible={this.state.showConfirm}
-            title={'CONFIRM'}
-            description={`Are you sure you want to redeem ${this.state.selectedVoucher.name}?`}
+            title={I18n.t('reward.confirm')}
+            description={`${I18n.t('reward.textConfirm')} ${this.state.selectedVoucher.name}?`}
             onYesPress={this.handleRedeemVoucher}
             onNoPress={() => this.setState({ showConfirm: false, showResult: false })}
             loading={this.props.redeemVoucherFetching}
@@ -320,8 +325,8 @@ class Rewards extends Component {
           <ModalConfirm
             address={this.state.address}
             isVisible={this.state.showConfirmEthereum}
-            title={'CONFIRM'}
-            description={`Are you sure you want to redeem ${this.state.selectedPlan.name}?`}
+            title={I18n.t('reward.confirm')}
+            description={`${I18n.t('reward.textConfirm')} ${this.state.selectedPlan.name}?`}
             onYesPress={this.handleRedeemEthereum}
             onNoPress={() => this.setState({ showConfirmEthereum: false, showResult: false })}
             loading={this.props.redeemEthereumFetching}
@@ -330,7 +335,7 @@ class Rewards extends Component {
           />
           <ModalPointDetail
             isVisible={this.state.showDetail}
-            title={this.state.selectedItem.descriptionType}
+            title={title}
             rewardName={this.state.selectedItem.rewardName}
             code={this.state.selectedItem.code}
             address={this.state.selectedItem.ethAddress}

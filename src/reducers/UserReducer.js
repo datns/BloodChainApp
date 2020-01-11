@@ -10,7 +10,8 @@ const initialState = Immutable({
   pointError: false,
   pointHistories: [],
   historiesFetching: false,
-  historiesError: false
+  historiesError: false,
+  language: 'vi'
 })
 
 export default (state = initialState, action) => {
@@ -38,6 +39,9 @@ export default (state = initialState, action) => {
       return state.merge({ historiesFetching: false, pointHistories: action.pointHistories, historiesError: false })
     case UserTypes.GET_POINTS_HISTORIES_FAILURE:
       return state.merge({ historiesFetching: false, historiesError: true })
+
+    case UserTypes.SET_LANGUAGE:
+      return state.merge({ language: action.language })
     default: return state
   }
 }

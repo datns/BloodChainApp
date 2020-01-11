@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import { Colors } from '../../utils/Themes';
 import SplashScreen from 'react-native-splash-screen';
+import I18n from '../../utils/I18n';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -45,13 +46,13 @@ class LoginScreen extends Component {
       <KeyboardAvoidingView style={styles.container}>
         <View style={styles.greetingView}>
           <SimpleLineIcons name='drop' size={55} color={Colors.primary} />
-          <Text style={styles.welcome}> Welcome, </Text>
-          <Text style={styles.signIn}> sign in to continue </Text>
+          <Text style={styles.welcome}>{I18n.t("login.welcome")}</Text>
+          <Text style={styles.signIn}>{I18n.t("login.subtitle")}</Text>
         </View>
         <View style={styles.inputView}>
           <View>
             <TextInput
-              placeholder={'Username'}
+              placeholder={I18n.t("login.username")}
               style={styles.input}
               placeholderTextColor={'#88a0a8'}
               underlineColorAndroid={'white'}
@@ -65,7 +66,7 @@ class LoginScreen extends Component {
           </View>
           <View>
             <TextInput
-              placeholder={'Password'}
+              placeholder={I18n.t("login.password")}
               style={styles.input}
               placeholderTextColor={'#88a0a8'}
               underlineColorAndroid={'white'}
@@ -78,13 +79,13 @@ class LoginScreen extends Component {
             <View style={styles.divider} />
           </View>
         </View>
-        {this.props.error && <Text style={styles.error}>Username or password is incorrect</Text>}
+        {this.props.error && <Text style={styles.error}>{I18n.t("login.error")}</Text>}
         <View style={styles.buttonView}>
           <TouchableOpacity onPress={this.handleLogin} disabled={this.props.loading}>
             <View style={styles.button}>
               {this.props.loading ? <ActivityIndicator color={Colors.easternBlue} size={'large'} /> : (
                 <React.Fragment>
-                  <Text style={styles.buttonText}>{'Get started'}</Text>
+                  <Text style={styles.buttonText}>{I18n.t("login.start")}</Text>
                   <Ionicons name={'ios-arrow-round-forward'} size={38} />
                 </React.Fragment>
               )}

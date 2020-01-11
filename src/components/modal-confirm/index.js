@@ -5,7 +5,7 @@ import Modal from 'react-native-modal'
 
 import styles from './style'
 import { Colors } from '../../utils/Themes';
-import { TextInput } from 'react-native-gesture-handler';
+import I18n from '../../utils/I18n';
 
 class ModalConfirm extends Component {
   constructor(props) {
@@ -41,16 +41,16 @@ class ModalConfirm extends Component {
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={onYesPress} disabled={loading}>
               {loading ? <ActivityIndicator size={'small'} color={Colors.white} /> : (
-                <Text style={styles.buttonText}>YES</Text>
+                <Text style={styles.buttonText}>{I18n.t('modalPoint.yes')}</Text>
               )}
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={onNoPress} disabled={loading}>
-              <Text style={styles.buttonText}>NO</Text>
+              <Text style={styles.buttonText}>{I18n.t('modalPoint.no')}</Text>
             </TouchableOpacity>
           </View>
           {showResult && (<View style={styles.infoContainer}>
             {voucher && <React.Fragment>
-              <Text style={styles.infoText}>{`Code:`}</Text>
+              <Text style={styles.infoText}>{I18n.t('modalPoint._code')}</Text>
               <Text style={styles.infoMetric}>{voucher}</Text>
             </React.Fragment>}
             {ethereum && <React.Fragment>

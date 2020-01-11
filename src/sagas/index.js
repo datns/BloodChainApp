@@ -18,7 +18,7 @@ import { getBloodBanks, getNearbyBloodBanks, getBloodBanksByName } from './Blood
 import { getBloodTests, getNearbyBloodTests, getBloodTestsByName } from './BloodTestSaga';
 import { getBloodSeparations, getNearbyBloodSeparations, getBloodSeparationsByName } from './BloodSeparationSaga';
 import { getHospitals, getNearbyHospitals, getHospitalsByName } from './HospitalSaga';
-import { getUserInfo, getUserPoint, getPointHistories } from './UserSaga';
+import { getUserInfo, getUserPoint, getPointHistories, setLanguage } from './UserSaga';
 import { getBloodPacks, getTransferHistories } from './BloodPackSaga';
 import { getVouchers, getEthereums, redeemVoucher, redeemEthereum } from './RewardSaga';
 
@@ -59,6 +59,7 @@ export default function* root() {
     takeLatest(UserTypes.GET_USER_INFO, getUserInfo, api),
     takeLatest(UserTypes.GET_USER_POINT, getUserPoint, api),
     takeLatest(UserTypes.GET_POINTS_HISTORIES, getPointHistories, api),
+    takeLatest(UserTypes.SET_LANGUAGE, setLanguage, api),
 
     takeLatest(BloodPackTypes.GET_BLOOD_PACKS, getBloodPacks, api),
     takeLatest(BloodPackTypes.GET_TRANSFER_HISTORIES, getTransferHistories, api),

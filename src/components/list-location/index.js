@@ -10,6 +10,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 import { LocationActions } from '../../actions';
 import { Colors } from '../../utils/Themes';
+import I18n from '../../utils/I18n';
 
 class ListLocation extends PureComponent {
   constructor(props) {
@@ -64,7 +65,7 @@ class ListLocation extends PureComponent {
       <React.Fragment>
         <TouchableOpacity style={styles.footer} onPress={this.props.loadMore}>
           {this.props.loading ? <ActivityIndicator size={'small'} color={Colors.easternBlue} /> :
-            <Text style={styles.textLoadMore}>Load more</Text>
+            <Text style={styles.textLoadMore}>{I18n.t('location.loadMore')}</Text>
           }
         </TouchableOpacity>
       </React.Fragment>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, ScrollView, Image, FlatList } from 'react-native';
+import { View, Text, Image, FlatList } from 'react-native';
 import moment from 'moment';
-
+import I18n from '../../utils/I18n';
 import styles from './styles';
 
 const ModalDetail = (props) => {
@@ -14,7 +14,7 @@ const ModalDetail = (props) => {
       </View>
       <View style={styles.body}>
         <Text style={styles.description}>{description}</Text>
-        <Text style={[styles.date, { marginTop: 20 }]}>Photos</Text>
+        <Text style={[styles.date, { marginTop: 20 }]}>{I18n.t('modalDetail.photos')}</Text>
         <FlatList
           data={photos}
           renderItem={_renderItem}
@@ -23,7 +23,7 @@ const ModalDetail = (props) => {
           style={styles.imageList}
         />
         <Text style={styles.date}>
-          Take place in <Text style={styles.campName} onPress={props.handlePressLocation}>{bloodCamp.name}</Text>
+          {I18n.t('modalDetail.take')} <Text style={styles.campName} onPress={props.handlePressLocation}>{bloodCamp.name}</Text>
         </Text>
       </View>
     </View>)
