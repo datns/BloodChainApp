@@ -59,7 +59,7 @@ function generateDescByType(data) {
   if (data.historyType == 4) {
     const patientName = data.toName.slice(0, data.toName.indexOf(';;;')),
       patientPhone = data.toName.slice(-10);
-    description = `${I18n.t('profile.patient')} ${patientName}\n${I18n.t('profile.patient')} ${patientPhone}\n${data.description}`;
+    description = `${I18n.t('profile.patient')} ${patientName}\n${I18n.t('profile.phone')} ${patientPhone}\n${data.description}`;
   }
   else if (data.historyType == 2)
     description = `${I18n.t('profile.disposed')}\n${data.description}`;
